@@ -27,21 +27,23 @@ namespace connect4Assignment
             for (int i = 0; i < 7; i++)
             {
 
-                Btn[i] = new Button();
+                //Initializing the buttons
+                initialize_Btn(i);
 
-                for (int j = 0; j < 6; j++)
+
+                for (int j = 0; j < 5; j++)
                 {
                     //init each label
                     lbl[i, j] = new Label();
 
                     //setting position and colour
-                    lbl[i, j].SetBounds(100+(75*i) , 120+(75*j), 60, 60);
+                    lbl[i, j].SetBounds(100+(75*i) , 195+(75*j), 60, 60);
                     lbl[i, j].BackColor = Color.White;
 
                     //making labels circular
-                    var path = new System.Drawing.Drawing2D.GraphicsPath();
-                    path.AddEllipse(0, 0, lbl[i, j].Width, lbl[i, j].Height);
-                    this.lbl[i, j].Region = new Region(path);
+                    var path2 = new System.Drawing.Drawing2D.GraphicsPath();
+                    path2.AddEllipse(0, 0, lbl[i, j].Width, lbl[i, j].Height);
+                    this.lbl[i, j].Region = new Region(path2);
 
                     //adding to the controls
                     Controls.Add(lbl[i, j]);
@@ -49,6 +51,20 @@ namespace connect4Assignment
 
             }
 
+        }
+
+        private void initialize_Btn(int i)
+        {
+            Btn[i] = new Button();
+            Btn[i].SetBounds(100 + (75 * i), 120, 60, 60);
+            Btn[i].BackColor = Color.White;
+            Btn[i].FlatAppearance.BorderSize = 0;
+            Btn[i].TabStop = false;
+            Btn[i].FlatStyle = FlatStyle.Flat;
+            var path = new System.Drawing.Drawing2D.GraphicsPath();
+            path.AddEllipse(0, 0, Btn[i].Width, Btn[i].Height);
+            this.Btn[i].Region = new Region(path);
+            Controls.Add(Btn[i]);
         }
 
         private void connect4_Load(object sender, EventArgs e)
