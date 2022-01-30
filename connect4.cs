@@ -14,6 +14,7 @@ namespace connect4Assignment
     {
         //initialising piece spaces
         Label[,] lbl = new Label[7, 6];
+        Button[] Btn = new Button[7];
         
         /// <summary>
         /// default constructor
@@ -25,6 +26,9 @@ namespace connect4Assignment
             //init each label and position
             for (int i = 0; i < 7; i++)
             {
+
+                Btn[i] = new Button();
+
                 for (int j = 0; j < 6; j++)
                 {
                     //init each label
@@ -50,6 +54,22 @@ namespace connect4Assignment
         private void connect4_Load(object sender, EventArgs e)
         {
          
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string Message = "Connect 4 Made by Caleb Harmon, David Topping, and Stacy Onyango";
+            MessageBox.Show(Message, "About");
+        }
+
+        private void rulesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.gamesver.com/the-rules-of-connect-4-according-to-m-bradley-hasbro/");
         }
     }
 }
