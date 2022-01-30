@@ -94,8 +94,25 @@ namespace connect4Assignment
             var path = new System.Drawing.Drawing2D.GraphicsPath();
             path.AddEllipse(0, 0, Btn[i].Width, Btn[i].Height);
             this.Btn[i].Region = new Region(path);
+
+            Btn[i].MouseHover += new EventHandler(Connect4_MouseHover);
+
             Controls.Add(Btn[i]);
         }
+
+        private void Connect4_MouseHover(object sender, EventArgs e)
+        {
+            
+            if (playerTurn == 'y')
+            {
+                Btn[2].BackColor = Color.Yellow;
+            }
+            else if (playerTurn == 'r')
+            {
+                Btn[2].BackColor = Color.Red;
+            }
+        }
+
 
         private void connect4_Load(object sender, EventArgs e)
         {
@@ -121,6 +138,17 @@ namespace connect4Assignment
         private void TxtPlayerTurnInfo_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void BtnRow_MouseHover(Button btn, EventArgs e)
+        {
+            if(playerTurn == 'y')
+            {
+                btn.BackColor = Color.Yellow;
+            }else if(playerTurn == 'r')
+            {
+                btn.BackColor = Color.Red;
+            }
         }
     }
 }
