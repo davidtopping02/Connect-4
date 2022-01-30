@@ -12,9 +12,10 @@ namespace connect4Assignment
 {
     public partial class connect4 : Form
     {
-        //initialising piece spaces
+        //init global variables/objects
         Label[,] lbl = new Label[7, 6];
         Button[] Btn = new Button[7];
+        char playerTurn = 'r';
         
         /// <summary>
         /// default constructor
@@ -22,6 +23,19 @@ namespace connect4Assignment
         public connect4()
         {
             InitializeComponent();
+
+            selectRandomPlayer();
+            //setting the player turn label
+            if (playerTurn == 'y')
+            {
+                TxtPlayerTurnInfo.ForeColor = Color.Yellow;
+                TxtPlayerTurnInfo.Text = "Yellow's Turn.";
+            }
+            else if(playerTurn == 'r')
+            {
+                TxtPlayerTurnInfo.ForeColor = Color.Red;
+                TxtPlayerTurnInfo.Text = "Red's Turn.";
+            }
 
             //init each label and position
             for (int i = 0; i < 7; i++)
@@ -50,6 +64,22 @@ namespace connect4Assignment
             }
 
         }
+        
+        /// <summary>
+        /// Selects a random player yellow or red
+        /// </summary>
+        private void selectRandomPlayer()
+        {
+            //init local variables
+            char[] options = {'y', 'r'};
+            var randomNum = new Random();
+
+            //getting random option r or y
+            char op = options[randomNum.Next(options.Length)];
+
+            //setting the player turn to the random option
+            playerTurn = op;
+        }
 
         private void connect4_Load(object sender, EventArgs e)
         {
@@ -70,6 +100,11 @@ namespace connect4Assignment
         private void rulesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("https://www.gamesver.com/the-rules-of-connect-4-according-to-m-bradley-hasbro/");
+        }
+
+        private void TxtPlayerTurnInfo_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
