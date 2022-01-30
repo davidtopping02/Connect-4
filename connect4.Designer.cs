@@ -34,6 +34,7 @@
             this.rulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnReset = new System.Windows.Forms.Button();
+            this.TxtPlayerTurnInfo = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,35 +48,33 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(706, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(941, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // rulesToolStripMenuItem
             // 
             this.rulesToolStripMenuItem.Name = "rulesToolStripMenuItem";
-            this.rulesToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.rulesToolStripMenuItem.Size = new System.Drawing.Size(58, 24);
             this.rulesToolStripMenuItem.Text = "Rules";
             this.rulesToolStripMenuItem.Click += new System.EventHandler(this.rulesToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(38, 20);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(47, 24);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // BtnReset
             // 
-            this.BtnReset.Location = new System.Drawing.Point(613, 525);
-            this.BtnReset.Margin = new System.Windows.Forms.Padding(2);
             this.BtnReset.BackColor = System.Drawing.Color.AliceBlue;
             this.BtnReset.Location = new System.Drawing.Point(844, 642);
             this.BtnReset.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -85,12 +84,25 @@
             this.BtnReset.Text = "Reset";
             this.BtnReset.UseVisualStyleBackColor = false;
             // 
+            // TxtPlayerTurnInfo
+            // 
+            this.TxtPlayerTurnInfo.BackColor = System.Drawing.Color.RoyalBlue;
+            this.TxtPlayerTurnInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.TxtPlayerTurnInfo.Font = new System.Drawing.Font("Tw Cen MT Condensed Extra Bold", 25.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TxtPlayerTurnInfo.ForeColor = System.Drawing.SystemColors.Window;
+            this.TxtPlayerTurnInfo.Location = new System.Drawing.Point(135, 73);
+            this.TxtPlayerTurnInfo.Name = "TxtPlayerTurnInfo";
+            this.TxtPlayerTurnInfo.Size = new System.Drawing.Size(346, 47);
+            this.TxtPlayerTurnInfo.TabIndex = 2;
+            this.TxtPlayerTurnInfo.TextChanged += new System.EventHandler(this.TxtPlayerTurnInfo_TextChanged);
+            // 
             // connect4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.RoyalBlue;
             this.ClientSize = new System.Drawing.Size(941, 703);
+            this.Controls.Add(this.TxtPlayerTurnInfo);
             this.Controls.Add(this.BtnReset);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -115,6 +127,7 @@
         private System.Windows.Forms.ToolStripMenuItem rulesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Button BtnReset;
+        private System.Windows.Forms.TextBox TxtPlayerTurnInfo;
     }
 }
 
