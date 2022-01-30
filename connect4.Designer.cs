@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(connect4));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,8 +46,8 @@
             this.exitToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(706, 28);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(941, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -70,25 +71,27 @@
             // 
             // BtnReset
             // 
-            this.BtnReset.Location = new System.Drawing.Point(613, 525);
-            this.BtnReset.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BtnReset.BackColor = System.Drawing.Color.AliceBlue;
+            this.BtnReset.Location = new System.Drawing.Point(844, 642);
+            this.BtnReset.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BtnReset.Name = "BtnReset";
-            this.BtnReset.Size = new System.Drawing.Size(84, 37);
+            this.BtnReset.Size = new System.Drawing.Size(73, 46);
             this.BtnReset.TabIndex = 1;
             this.BtnReset.Text = "Reset";
-            this.BtnReset.UseVisualStyleBackColor = true;
+            this.BtnReset.UseVisualStyleBackColor = false;
             // 
             // connect4
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.RoyalBlue;
-            this.ClientSize = new System.Drawing.Size(706, 571);
+            this.ClientSize = new System.Drawing.Size(941, 703);
             this.Controls.Add(this.BtnReset);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.Name = "connect4";
             this.Text = "Connect 4 (play)";
