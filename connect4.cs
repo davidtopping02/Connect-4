@@ -96,21 +96,36 @@ namespace connect4Assignment
             this.Btn[i].Region = new Region(path);
 
             Btn[i].MouseHover += new EventHandler(Connect4_MouseHover);
+            Btn[i].MouseLeave += new EventHandler(Connect4_MouseLeave);
 
             Controls.Add(Btn[i]);
         }
 
+        /// <summary>
+        /// Changing the colour of the top buttons on the mouse hover
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Connect4_MouseHover(object sender, EventArgs e)
         {
-            
+
+            Button button = (Button)sender;
+                
             if (playerTurn == 'y')
             {
-                Btn[2].BackColor = Color.Yellow;
+                button.BackColor = Color.Yellow;
             }
             else if (playerTurn == 'r')
             {
-                Btn[2].BackColor = Color.Red;
+               button.BackColor = Color.Red;
             }
+        }
+
+        private void Connect4_MouseLeave(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+
+            button.BackColor = Color.White;
         }
 
 
