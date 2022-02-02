@@ -13,10 +13,11 @@ namespace connect4Assignment
     public partial class connect4 : Form
     {
         //init global variables/objects
+        Label[] lblTop = new Label[7];
         Label[,] lbl = new Label[7, 5];
         Button[] Btn = new Button[7];
         char playerTurn = 'r';
-        
+
         /// <summary>
         /// default constructor
         /// </summary>
@@ -31,7 +32,7 @@ namespace connect4Assignment
                 TxtPlayerTurnInfo.ForeColor = Color.Yellow;
                 TxtPlayerTurnInfo.Text = "Yellow's Turn.";
             }
-            else if(playerTurn == 'r')
+            else if (playerTurn == 'r')
             {
                 TxtPlayerTurnInfo.ForeColor = Color.Red;
                 TxtPlayerTurnInfo.Text = "Red's Turn.";
@@ -40,6 +41,8 @@ namespace connect4Assignment
             //init each label and position
             for (int i = 0; i < 7; i++)
             {
+                //initialise top labels for the mouse hovers
+                initialiseTopLabels(i);
 
                 //Initializing the buttons
                 initialize_Btn(i);
@@ -50,7 +53,7 @@ namespace connect4Assignment
                     lbl[i, j] = new Label();
 
                     //setting position and colour
-                    lbl[i, j].SetBounds(100+(75*i) , 195+(75*j), 60, 60);
+                    lbl[i, j].SetBounds(100 + (75 * i), 230 + (75 * j), 60, 60);
                     lbl[i, j].BackColor = Color.White;
 
                     //making labels circular
@@ -65,14 +68,32 @@ namespace connect4Assignment
             }
 
         }
-        
+
+        private void initialiseTopLabels(int row)
+        {
+            //init each label
+            lblTop[row] = new Label();
+
+            //setting position and colour
+            lblTop[row].BackColor = Color.RoyalBlue;
+            lblTop[row].SetBounds(100 + (75 * row), 90, 60, 60);
+
+            //making labels circular
+            var path2 = new System.Drawing.Drawing2D.GraphicsPath();
+            path2.AddEllipse(0, 0, lblTop[row].Width, lblTop[row].Height);
+            this.lblTop[row].Region = new Region(path2);
+
+            //adding to the controls
+            Controls.Add(lblTop[row]);
+        }
+
         /// <summary>
         /// Selects a random player yellow or red
         /// </summary>
         private void selectRandomPlayer()
         {
             //init local variables
-            char[] options = {'y', 'r'};
+            char[] options = { 'y', 'r' };
             var randomNum = new Random();
 
             //getting random option r or y
@@ -85,7 +106,7 @@ namespace connect4Assignment
         private void initialize_Btn(int i)
         {
             Btn[i] = new Button();
-            Btn[i].SetBounds(100 + (75 * i), 120, 60, 60);
+            Btn[i].SetBounds(100 + (75 * i), 160, 60, 60);
             Btn[i].BackColor = Color.White;
             Btn[i].FlatAppearance.BorderSize = 0;
             Btn[i].TabStop = false;
@@ -95,8 +116,8 @@ namespace connect4Assignment
             this.Btn[i].Region = new Region(path);
 
             //changing the colour of the buttons when they are hovered over
-            //Btn[i].MouseHover += new EventHandler(Connect4_MouseHover);
-           // Btn[i].MouseLeave += new EventHandler(Connect4_MouseLeave);
+            Btn[i].MouseHover += delegate (object sender, EventArgs e) { Connect4_MouseHover(sender, e, i); };
+            Btn[i].MouseLeave += delegate (object sender, EventArgs e) { Connect4_MouseLeave(sender, e, i); };
 
             //click
             Btn[i].Click += delegate (object sender, EventArgs e) { Connect4_ButtonClick(sender, e, i); };
@@ -145,7 +166,7 @@ namespace connect4Assignment
                     row = 0;
                 }
 
-                
+
             }
             //This is for the top row of buttons
             else if (lbl[col, row].BackColor != Color.White && buttonClicked.BackColor == Color.White)
@@ -169,6 +190,17 @@ namespace connect4Assignment
             //check for 4 in a row
             fourInRowChecker(col, row);
             changePlayer();
+
+
+            //changing the top label accordingly
+            if (playerTurn == 'y')
+            {
+                lblTop[col].BackColor = Color.Yellow;
+            }
+            else if (playerTurn == 'r')
+            {
+                lblTop[col].BackColor = Color.Red;
+            }
         }
 
         private void fourInRowChecker(int col, int row)
@@ -188,12 +220,14 @@ namespace connect4Assignment
 
 
             //counting the vertical
-            
-            for (int i = 0; i < 5; i++) {
-                if(lbl[col, i].BackColor == Color.FromName(player))
+
+            for (int i = 0; i < 5; i++)
+            {
+                if (lbl[col, i].BackColor == Color.FromName(player))
                 {
                     inARow++;
-                } else
+                }
+                else
                 {
                     inARow = 0;
                 }
@@ -204,7 +238,7 @@ namespace connect4Assignment
                     break;
                 }
             }
-            
+
             //counting the horizontal
             for (int i = 0; i < 7; i++)
             {
@@ -252,32 +286,28 @@ namespace connect4Assignment
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Connect4_MouseHover(object sender, EventArgs e)
+        private void Connect4_MouseHover(object sender, EventArgs e, int i)
         {
 
-            Button button = (Button)sender;
-                
             if (playerTurn == 'y')
             {
-                button.BackColor = Color.Yellow;
+                lblTop[i].BackColor = Color.Yellow;
             }
             else if (playerTurn == 'r')
             {
-               button.BackColor = Color.Red;
+                lblTop[i].BackColor = Color.Red;
             }
         }
 
-        private void Connect4_MouseLeave(object sender, EventArgs e)
+        private void Connect4_MouseLeave(object sender, EventArgs e, int i)
         {
-            Button button = (Button)sender;
-
-            button.BackColor = Color.White;
+            lblTop[i].BackColor = Color.RoyalBlue;
         }
 
 
         private void connect4_Load(object sender, EventArgs e)
         {
-         
+
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -308,10 +338,11 @@ namespace connect4Assignment
         /// <param name="e"></param>
         private void BtnRow_MouseHover(Button btn, EventArgs e)
         {
-            if(playerTurn == 'y')
+            if (playerTurn == 'y')
             {
                 btn.BackColor = Color.Yellow;
-            }else if(playerTurn == 'r')
+            }
+            else if (playerTurn == 'r')
             {
                 btn.BackColor = Color.Red;
             }
@@ -324,12 +355,12 @@ namespace connect4Assignment
         /// <param name="e"></param>
         private void BtnReset_Click(object sender, EventArgs e)
         {
-            for(int i = 0; i < 7; i++)
+            for (int i = 0; i < 7; i++)
             {
                 Btn[i].BackColor = Color.White;
                 for (int j = 0; j < 5; j++)
                 {
-                    lbl[i,j].BackColor = Color.White;
+                    lbl[i, j].BackColor = Color.White;
                 }
             }
         }
