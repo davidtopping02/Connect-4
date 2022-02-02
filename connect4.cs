@@ -289,6 +289,17 @@ namespace connect4Assignment
 
         private void fourInRowChecker(int col, int row)
         {
+
+            checkVertical();
+            checkHorizontal();
+
+
+
+        }
+
+        private void checkHorizontal()
+        {
+
             int inARow = 0;
             string player = "";
 
@@ -301,48 +312,79 @@ namespace connect4Assignment
             {
                 player = "Red";
             }
-
-
-            //counting the vertical
+            //counting horizontal
 
             for (int i = 0; i < 5; i++)
             {
-                if (lbl[col, i].BackColor == Color.FromName(player))
+                //inARow = 0;
+                for (int j = 0; j < 7; j++)
                 {
-                    inARow++;
-                }
-                else
-                {
-                    inARow = 0;
-                }
-                txtBoxWin.Text = Convert.ToString(inARow);
-                if (inARow >= 4)
-                {
-                    txtBoxWin.Text = "Winner";
-                    break;
-                }
-            }
+                    // j is col, i is row
+                    if (lbl[j, i].BackColor == Color.FromName(player))
+                    {
+                        inARow++;
+                    }
+                    else
+                    {
+                        inARow = 0;
+                    }
+                   // txtBoxWin.Text = Convert.ToString(inARow);
+                    if (inARow >= 4)
+                    {
+                        txtBoxWin.Text = "Winner";
+                        break;
+                    }
 
-            //counting the horizontal
+                }
+
+            }
+        }
+
+        private void checkVertical()
+        {
+
+            int inARow = 0;
+            string player = "";
+
+            //determine which player to count for
+            if (playerTurn == 'y')
+            {
+                player = "Yellow";
+            }
+            else if (playerTurn == 'r')
+            {
+                player = "Red";
+            }
             for (int i = 0; i < 7; i++)
             {
-                if (lbl[i, row].BackColor == Color.FromName(player))
-                {
-                    inARow++;
-                }
-                else
-                {
-                    //inARow = 0;
-                }
-                txtBoxWin.Text = Convert.ToString(inARow);
-                if (inARow >= 4)
-                {
-                    txtBoxWin.Text = "Winner";
-                    break;
-                }
-            }
 
-            //counting diagonals
+
+                inARow = 0;
+                for (int j = 0; j < 5; j++)
+                {
+                    // i is col, j is row
+                    if (lbl[i, j].BackColor == Color.FromName(player))
+                    {
+                        inARow++;
+                    }
+                    else
+                    {
+                        inARow = 0;
+                    }
+                   // txtBoxWin.Text = Convert.ToString(inARow2);
+                    if (inARow >= 4)
+                    {
+                        txtBoxWin.Text = "Winner";
+                        break;
+                    }
+
+                }
+
+            }
+        }
+
+        private void checkDiagonal()
+        {
 
         }
 
@@ -447,6 +489,11 @@ namespace connect4Assignment
                     lbl[i, j].BackColor = Color.White;
                 }
             }
+        }
+
+        private void txtBoxWin_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
