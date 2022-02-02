@@ -205,7 +205,7 @@ namespace connect4Assignment
             }
 
             //check for 4 in a row
-            fourInRowChecker(col, row);
+            fourInRowChecker();
             changePlayer();
         }
 
@@ -287,12 +287,14 @@ namespace connect4Assignment
             }
         }
 
-        private void fourInRowChecker(int col, int row)
+        private void fourInRowChecker()
         {
 
+            //this could be optimized so that if a win is optimized in vertical it doesnt check in horizontal... etc.
             checkVertical();
             checkHorizontal();
-
+            checkDiagonal_downRight();
+            //checkDiagonal_downLeft();
 
 
         }
@@ -383,10 +385,103 @@ namespace connect4Assignment
             }
         }
 
-        private void checkDiagonal()
+        private void checkDiagonal_downRight()
         {
 
+            string player = "";
+            int inARow = 0;
+             
+            //determine which player to count for
+            if (playerTurn == 'y')
+            {
+                player = "Yellow";
+            }
+            else if (playerTurn == 'r')
+            {
+                player = "Red";
+            }
+
+            for (int i = 0; i < 4; i++)
+            {
+
+            
+                for (int j = 0; j < 2; j++)
+                {
+
+                    //difference for diagonal
+                    for (int d = 0; d < 4; d++)
+                    {
+
+                        // i is col, j is row
+                        if (lbl[i+d, j+d].BackColor == Color.FromName(player))
+                        {
+                            inARow++;
+                        }
+                        else
+                        {
+                            inARow = 0;
+                        }
+                        // txtBoxWin.Text = Convert.ToString(inARow2);
+                        if (inARow >= 4)
+                        {
+                            txtBoxWin.Text = "Winner";
+                            break;
+                        }
+                    }
+                }
+
+            }
         }
+
+        private void checkDiagonal_downLeft()
+        {
+
+            string player = "";
+            int inARow = 0;
+
+            //determine which player to count for
+            if (playerTurn == 'y')
+            {
+                player = "Yellow";
+            }
+            else if (playerTurn == 'r')
+            {
+                player = "Red";
+            }
+
+            for (int i = 6; i > 4; i--)
+            {
+
+
+                for (int j = 4; j >2 ; j--)
+                {
+
+                    //difference for diagonal
+                    for (int d = 0; d < 4; d++)
+                    {
+
+                        // i is col, j is row
+                        if (lbl[i - d, j + d].BackColor == Color.FromName(player))
+                        {
+                            inARow++;
+                        }
+                        else
+                        {
+                            inARow = 0;
+                        }
+                        // txtBoxWin.Text = Convert.ToString(inARow2);
+                        if (inARow >= 4)
+                        {
+                            txtBoxWin.Text = "Winner";
+                            break;
+                        }
+                    }
+                }
+
+            }
+        }
+
+
 
         /// <summary>
         /// Helper function to change the player's turn
@@ -489,6 +584,8 @@ namespace connect4Assignment
                     lbl[i, j].BackColor = Color.White;
                 }
             }
+
+            txtBoxWin.Text = "";
         }
 
         private void txtBoxWin_TextChanged(object sender, EventArgs e)
