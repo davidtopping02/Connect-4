@@ -134,6 +134,18 @@ namespace connect4Assignment
             //adding a tile to the row as long as there is an empty slot
             int row = 0;
 
+            //changing the top label accordingly
+            if (playerTurn == 'y')
+            {
+                lblTop[col].BackColor = Color.Red;
+                lblTop[col].Refresh();
+            }
+            else if (playerTurn == 'r')
+            {
+                lblTop[col].BackColor = Color.Yellow;
+                lblTop[col].Refresh();
+            }
+
             //This is for the labels (NOT the top row butons)
             if (lbl[col, 0].BackColor == Color.White)
             {
@@ -195,17 +207,6 @@ namespace connect4Assignment
             //check for 4 in a row
             fourInRowChecker(col, row);
             changePlayer();
-
-
-            //changing the top label accordingly
-            if (playerTurn == 'y')
-            {
-                lblTop[col].BackColor = Color.Yellow;
-            }
-            else if (playerTurn == 'r')
-            {
-                lblTop[col].BackColor = Color.Red;
-            }
         }
 
         /// <summary>
