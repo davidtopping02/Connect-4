@@ -135,13 +135,13 @@ namespace connect4Assignment
                 if (playerTurn == 'y')
                 {
                     lbl[col, row].BackColor = Color.Yellow;
-                    changePlayer();
+                    //changePlayer();
                     row = 0;
                 }
                 else if (playerTurn == 'r')
                 {
                     lbl[col, row].BackColor = Color.Red;
-                    changePlayer();
+                    //changePlayer();
                     row = 0;
                 }
 
@@ -155,23 +155,76 @@ namespace connect4Assignment
                 if (playerTurn == 'y')
                 {
                     buttonClicked.BackColor = Color.Yellow;
-                    changePlayer();
+                    //changePlayer();
                     row = 0;
                 }
                 else if (playerTurn == 'r')
                 {
                     buttonClicked.BackColor = Color.Red;
-                    changePlayer();
+                    //changePlayer();
                     row = 0;
                 }
             }
 
             //check for 4 in a row
-            fourInRowChecker();
+            fourInRowChecker(col, row);
+            changePlayer();
         }
 
-        private void fourInRowChecker()
+        private void fourInRowChecker(int col, int row)
         {
+            int inARow = 0;
+            string player = "";
+
+            //determine which player to count for
+            if (playerTurn == 'y')
+            {
+                player = "Yellow";
+            }
+            else if (playerTurn == 'r')
+            {
+                player = "Red";
+            }
+
+
+            //counting the vertical
+            
+            for (int i = 0; i < 5; i++) {
+                if(lbl[col, i].BackColor == Color.FromName(player))
+                {
+                    inARow++;
+                } else
+                {
+                    inARow = 0;
+                }
+                txtBoxWin.Text = Convert.ToString(inARow);
+                if (inARow >= 4)
+                {
+                    txtBoxWin.Text = "Winner";
+                    break;
+                }
+            }
+            
+            //counting the horizontal
+            for (int i = 0; i < 7; i++)
+            {
+                if (lbl[i, row].BackColor == Color.FromName(player))
+                {
+                    inARow++;
+                }
+                else
+                {
+                    //inARow = 0;
+                }
+                txtBoxWin.Text = Convert.ToString(inARow);
+                if (inARow >= 4)
+                {
+                    txtBoxWin.Text = "Winner";
+                    break;
+                }
+            }
+
+            //counting diagonals
 
         }
 
