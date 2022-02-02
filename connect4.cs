@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace connect4Assignment
 {
@@ -154,15 +155,21 @@ namespace connect4Assignment
 
                 //changing the colour of the tile
                 if (playerTurn == 'y')
-                {
+                {    
+                    //dropping tile animation
+                    dropAnimation(col, row);
+
+                    //changing colour
                     lbl[col, row].BackColor = Color.Yellow;
-                    //changePlayer();
+
                     row = 0;
                 }
                 else if (playerTurn == 'r')
                 {
+                    dropAnimation(col, row);
+
+                    //changing colour
                     lbl[col, row].BackColor = Color.Red;
-                    //changePlayer();
                     row = 0;
                 }
 
@@ -176,13 +183,11 @@ namespace connect4Assignment
                 if (playerTurn == 'y')
                 {
                     buttonClicked.BackColor = Color.Yellow;
-                    //changePlayer();
                     row = 0;
                 }
                 else if (playerTurn == 'r')
                 {
                     buttonClicked.BackColor = Color.Red;
-                    //changePlayer();
                     row = 0;
                 }
             }
@@ -200,6 +205,84 @@ namespace connect4Assignment
             else if (playerTurn == 'r')
             {
                 lblTop[col].BackColor = Color.Red;
+            }
+        }
+
+        /// <summary>
+        /// Animates the peieces dropping down a column
+        /// </summary>
+        /// <param name="col"></param>
+        /// <param name="row"></param>
+        private void dropAnimation(int col, int row)
+        {
+            if (playerTurn == 'y')
+            {
+                //changing the top button
+                if (Btn[col].BackColor == Color.White)
+                {
+                    //changing top button to yellow
+                    Btn[col].BackColor = Color.Yellow;
+                    Btn[col].Refresh();
+
+                    //wait
+                    Thread.Sleep(110);
+
+                    //back to white
+                    Btn[col].BackColor = Color.White;
+                    Btn[col].Refresh();
+                }
+
+                //animation for peice dropping labels
+                for (int i = 0; i < row; i++)
+                {
+
+                    //changing label yellow
+                    lbl[col, i].BackColor = Color.Yellow;
+                    lbl[col, i].Refresh();
+
+                    //wait
+                    Thread.Sleep(110);
+
+                    //back to white
+                    lbl[col, i].BackColor = Color.White;
+                    lbl[col, i].Refresh();
+
+                }
+            }
+
+            if (playerTurn == 'r')
+            {
+                //changing the top button
+                if (Btn[col].BackColor == Color.White)
+                {
+                    //changing top button to yellow
+                    Btn[col].BackColor = Color.Red;
+                    Btn[col].Refresh();
+
+                    //wait
+                    Thread.Sleep(110);
+
+                    //back to white
+                    Btn[col].BackColor = Color.White;
+                    Btn[col].Refresh();
+                }
+
+                //animation for peice dropping labels
+                for (int i = 0; i < row; i++)
+                {
+
+                    //changing label yellow
+                    lbl[col, i].BackColor = Color.Red;
+                    lbl[col, i].Refresh();
+
+                    //wait
+                    Thread.Sleep(110);
+
+                    //back to white
+                    lbl[col, i].BackColor = Color.White;
+                    lbl[col, i].Refresh();
+
+                }
             }
         }
 
