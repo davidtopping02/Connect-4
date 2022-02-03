@@ -167,7 +167,7 @@ namespace connect4Assignment
                 if (playerTurn == 'y')
                 {    
                     //dropping tile animation
-                    dropAnimation(col, row);
+                    //dropAnimation(col, row);
 
                     //changing colour
                     lbl[col, row].BackColor = Color.Yellow;
@@ -176,7 +176,7 @@ namespace connect4Assignment
                 }
                 else if (playerTurn == 'r')
                 {
-                    dropAnimation(col, row);
+                    //dropAnimation(col, row);
 
                     //changing colour
                     lbl[col, row].BackColor = Color.Red;
@@ -289,18 +289,37 @@ namespace connect4Assignment
         {
 
             //this could be optimized so that if a win is optimized in vertical it doesnt check in horizontal... etc.
+
             checkVertical();
             checkHorizontal();
             checkDiagonal_downRight();
-            //checkDiagonal_downLeft();
+            checkDiagonal_downLeft();
+            int open = 0;
+            if (checkVertical() == false && checkHorizontal() == false && checkDiagonal_downLeft() == false && checkDiagonal_downRight() == false){
+
+               for(int i =0 ; i < 7; i++)
+                {
+                   if(lbl[i,0].BackColor == Color.White)
+
+                    {
+                        open++;
+                    }
+                   
+                }
+
+               if(open == 0)
+                {
+                    txtBoxWin.Text = "draw";
+                }
+
+            }
 
 
         }
 
-        private void checkHorizontal()
+        private string getColor()
         {
 
-            int inARow = 0;
             string player = "";
 
             //determine which player to count for
@@ -312,15 +331,25 @@ namespace connect4Assignment
             {
                 player = "Red";
             }
+
+            return player;
+
+        }
+
+        private bool checkHorizontal()
+        {
+
+            int inARow = 0;
+           
             //counting horizontal
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 6; i++)
             {
                 //inARow = 0;
                 for (int j = 0; j < 7; j++)
                 {
                     // j is col, i is row
-                    if (lbl[j, i].BackColor == Color.FromName(player))
+                    if (lbl[j, i].BackColor == Color.FromName(getColor()))
                     {
                         inARow++;
                     }
@@ -332,38 +361,28 @@ namespace connect4Assignment
                     if (inARow >= 4)
                     {
                         txtBoxWin.Text = "Winner";
-                        break;
+                        return true;
                     }
 
                 }
 
             }
+            return false;
         }
 
-        private void checkVertical()
+        private bool checkVertical()
         {
 
             int inARow = 0;
-            string player = "";
-
-            //determine which player to count for
-            if (playerTurn == 'y')
-            {
-                player = "Yellow";
-            }
-            else if (playerTurn == 'r')
-            {
-                player = "Red";
-            }
+           
             for (int i = 0; i < 7; i++)
             {
 
 
-                inARow = 0;
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < 6; j++)
                 {
                     // i is col, j is row
-                    if (lbl[i, j].BackColor == Color.FromName(player))
+                    if (lbl[i, j].BackColor == Color.FromName(getColor()))
                     {
                         inARow++;
                     }
@@ -375,35 +394,26 @@ namespace connect4Assignment
                     if (inARow >= 4)
                     {
                         txtBoxWin.Text = "Winner";
-                        break;
+                        return true;
                     }
 
                 }
 
             }
+            return false;
         }
 
-        private void checkDiagonal_downRight()
+        private bool checkDiagonal_downRight()
         {
+         
 
-            string player = "";
             int inARow = 0;
-             
-            //determine which player to count for
-            if (playerTurn == 'y')
-            {
-                player = "Yellow";
-            }
-            else if (playerTurn == 'r')
-            {
-                player = "Red";
-            }
 
             for (int i = 0; i < 4; i++)
             {
 
             
-                for (int j = 0; j < 2; j++)
+                for (int j = 0; j < 3; j++)
                 {
 
                     //difference for diagonal
@@ -411,7 +421,7 @@ namespace connect4Assignment
                     {
 
                         // i is col, j is row
-                        if (lbl[i+d, j+d].BackColor == Color.FromName(player))
+                        if (lbl[i+d, j+d].BackColor == Color.FromName(getColor()))
                         {
                             inARow++;
                         }
@@ -423,35 +433,26 @@ namespace connect4Assignment
                         if (inARow >= 4)
                         {
                             txtBoxWin.Text = "Winner";
-                            break;
+                            return true;
                         }
                     }
                 }
 
             }
+            return false;
         }
 
-        private void checkDiagonal_downLeft()
+        private bool checkDiagonal_downLeft()
         {
 
-            string player = "";
-            int inARow = 0;
 
-            //determine which player to count for
-            if (playerTurn == 'y')
-            {
-                player = "Yellow";
-            }
-            else if (playerTurn == 'r')
-            {
-                player = "Red";
-            }
+            int inARow = 0;
 
             for (int i = 6; i > 4; i--)
             {
 
 
-                for (int j = 4; j >2 ; j--)
+                for (int j = 0; j < 3 ; j++)
                 {
 
                     //difference for diagonal
@@ -459,7 +460,7 @@ namespace connect4Assignment
                     {
 
                         // i is col, j is row
-                        if (lbl[i - d, j + d].BackColor == Color.FromName(player))
+                        if (lbl[i - d, j + d].BackColor == Color.FromName(getColor()))
                         {
                             inARow++;
                         }
@@ -471,12 +472,14 @@ namespace connect4Assignment
                         if (inARow >= 4)
                         {
                             txtBoxWin.Text = "Winner";
-                            break;
+                            return true;
+                            
                         }
                     }
                 }
 
             }
+            return false;
         }
 
 
