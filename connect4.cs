@@ -15,7 +15,7 @@ namespace connect4Assignment
     {
         //init global variables/objects
         Label[] lblTop = new Label[7];
-        Label[,] lbl = new Label[7, 5];
+        Label[,] lbl = new Label[7, 6];
         Button[] Btn = new Button[7];
         char playerTurn = 'r';
 
@@ -27,6 +27,7 @@ namespace connect4Assignment
             InitializeComponent();
 
             selectRandomPlayer();
+
             //setting the player turn label
             if (playerTurn == 'y')
             {
@@ -48,13 +49,13 @@ namespace connect4Assignment
                 //Initializing the buttons
                 initialize_Btn(i);
 
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < 6; j++)
                 {
                     //init each label
                     lbl[i, j] = new Label();
 
                     //setting position and colour
-                    lbl[i, j].SetBounds(100 + (75 * i), 230 + (75 * j), 60, 60);
+                    lbl[i, j].SetBounds(100 + (75 * i), 210 + (75 * j), 60, 60);
                     lbl[i, j].BackColor = Color.White;
 
                     //making labels circular
@@ -107,14 +108,11 @@ namespace connect4Assignment
         private void initialize_Btn(int i)
         {
             Btn[i] = new Button();
-            Btn[i].SetBounds(100 + (75 * i), 160, 60, 60);
+            Btn[i].SetBounds(115 + (75 * i), 180, 30, 10);
             Btn[i].BackColor = Color.White;
             Btn[i].FlatAppearance.BorderSize = 0;
             Btn[i].TabStop = false;
             Btn[i].FlatStyle = FlatStyle.Flat;
-            var path = new System.Drawing.Drawing2D.GraphicsPath();
-            path.AddEllipse(0, 0, Btn[i].Width, Btn[i].Height);
-            this.Btn[i].Region = new Region(path);
 
             //changing the colour of the buttons when they are hovered over
             Btn[i].MouseHover += delegate (object sender, EventArgs e) { Connect4_MouseHover(sender, e, i); };
@@ -152,7 +150,7 @@ namespace connect4Assignment
                 while (lbl[col, row].BackColor == Color.White)
                 {
 
-                    if (row == 4)
+                    if (row == 5)
                     {
                         break;
                     }
@@ -579,7 +577,7 @@ namespace connect4Assignment
             for (int i = 0; i < 7; i++)
             {
                 Btn[i].BackColor = Color.White;
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < 6; j++)
                 {
                     lbl[i, j].BackColor = Color.White;
                 }
