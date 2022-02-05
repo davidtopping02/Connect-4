@@ -46,28 +46,40 @@ namespace connect4Assignment
                 //initialise top labels for the mouse hovers
                 initialiseTopLabels(i);
 
-                //Initializing the buttons
-                initialize_Btn(i);
-
                 for (int j = 0; j < 6; j++)
                 {
-                    //init each label
-                    lbl[i, j] = new Label();
-
-                    //setting position and colour
-                    lbl[i, j].SetBounds(100 + (75 * i), 210 + (75 * j), 60, 60);
-                    lbl[i, j].BackColor = Color.White;
-
-                    //making labels circular
-                    var path2 = new System.Drawing.Drawing2D.GraphicsPath();
-                    path2.AddEllipse(0, 0, lbl[i, j].Width, lbl[i, j].Height);
-                    this.lbl[i, j].Region = new Region(path2);
-
-                    //adding to the controls
-                    Controls.Add(lbl[i, j]);
+                    initLabelPropery(i, j); 
                 }
 
             }
+
+        }
+
+        private void initLabelPropery(int i, int j)
+        {
+            //init each label
+            lbl[i, j] = new Label();
+
+            //setting position and colour
+            lbl[i, j].SetBounds(100 + (75 * i), 170 + (75 * j), 60, 60);
+            lbl[i, j].BackColor = Color.White;
+
+            //making labels circular
+            var path2 = new System.Drawing.Drawing2D.GraphicsPath();
+            path2.AddEllipse(0, 0, lbl[i, j].Width, lbl[i, j].Height);
+            this.lbl[i, j].Region = new Region(path2);
+
+            //event handlers
+
+            //mouse overs
+            lbl[i,j].MouseHover += delegate (object sender, EventArgs e) { Connect4_MouseHover(sender, e, i); };
+            lbl[i,j].MouseLeave += delegate (object sender, EventArgs e) { Connect4_MouseLeave(sender, e, i); };
+
+            //click
+            lbl[i, j].Click += delegate (object sender, EventArgs e) { Connect4_LabelClick(sender, e, i); };
+
+            //adding to the controls
+            Controls.Add(lbl[i, j]);
 
         }
 
@@ -105,29 +117,17 @@ namespace connect4Assignment
             playerTurn = op;
         }
 
-        private void initialize_Btn(int i)
+        private void Connect4_LabelClick(object sender, EventArgs e, int col)
         {
-            Btn[i] = new Button();
-            Btn[i].SetBounds(115 + (75 * i), 180, 30, 10);
-            Btn[i].BackColor = Color.White;
-            Btn[i].FlatAppearance.BorderSize = 0;
-            Btn[i].TabStop = false;
-            Btn[i].FlatStyle = FlatStyle.Flat;
 
-            //changing the colour of the buttons when they are hovered over
-            Btn[i].MouseHover += delegate (object sender, EventArgs e) { Connect4_MouseHover(sender, e, i); };
-            Btn[i].MouseLeave += delegate (object sender, EventArgs e) { Connect4_MouseLeave(sender, e, i); };
+            //MAY NOT BE THE BEST WAY TO DO IT
+            if (lbl[col,0].BackColor != Color.White)
+            {
+                return;
+            }
 
-            //click
-            Btn[i].Click += delegate (object sender, EventArgs e) { Connect4_ButtonClick(sender, e, i); };
-
-            Controls.Add(Btn[i]);
-        }
-
-        private void Connect4_ButtonClick(object sender, EventArgs e, int col)
-        {
-            //button clicked
-            Button buttonClicked = (Button)sender;
+            ////button clicked
+            Label labelClicked = (Label)sender;
 
             //adding a tile to the row as long as there is an empty slot
             int row = 0;
@@ -165,7 +165,7 @@ namespace connect4Assignment
 
                 //changing the colour of the tile
                 if (playerTurn == 'y')
-                {    
+                {
                     //dropping tile animation
                     //dropAnimation(col, row);
 
@@ -180,24 +180,6 @@ namespace connect4Assignment
 
                     //changing colour
                     lbl[col, row].BackColor = Color.Red;
-                    row = 0;
-                }
-
-
-            }
-            //This is for the top row of buttons
-            else if (lbl[col, row].BackColor != Color.White && buttonClicked.BackColor == Color.White)
-            {
-
-                //changing the colour of the tile
-                if (playerTurn == 'y')
-                {
-                    buttonClicked.BackColor = Color.Yellow;
-                    row = 0;
-                }
-                else if (playerTurn == 'r')
-                {
-                    buttonClicked.BackColor = Color.Red;
                     row = 0;
                 }
             }
@@ -315,6 +297,67 @@ namespace connect4Assignment
             }
 
 
+        }
+
+        /// <summary>
+        /// Helper function to change the player's turn
+        /// </summary>
+        private void changePlayer()
+        {
+            if (playerTurn == 'r')
+            {
+                playerTurn = 'y';
+                TxtPlayerTurnInfo.ForeColor = Color.Yellow;
+                TxtPlayerTurnInfo.Text = "Yellow's Turn.";
+            }
+            else if (playerTurn == 'y')
+            {
+                playerTurn = 'r';
+                TxtPlayerTurnInfo.ForeColor = Color.Red;
+                TxtPlayerTurnInfo.Text = "Red's Turn.";
+            }
+        }
+
+        /// <summary>
+        /// Changing the colour of the top buttons on the mouse hover
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Connect4_MouseHover(object sender, EventArgs e, int i)
+        {
+
+            if (playerTurn == 'y')
+            {
+                lblTop[i].BackColor = Color.Yellow;
+            }
+            else if (playerTurn == 'r')
+            {
+                lblTop[i].BackColor = Color.Red;
+            }
+        }
+
+        private void Connect4_MouseLeave(object sender, EventArgs e, int i)
+        {
+            lblTop[i].BackColor = Color.RoyalBlue;
+        }
+
+
+        /// <summary>
+        /// Clears the board of all tiles
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnReset_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 6; j++)
+                {
+                    lbl[i, j].BackColor = Color.White;
+                }
+            }
+
+            txtBoxWin.Text = "";
         }
 
         private string getColor()
@@ -482,51 +525,6 @@ namespace connect4Assignment
             return false;
         }
 
-
-
-        /// <summary>
-        /// Helper function to change the player's turn
-        /// </summary>
-        private void changePlayer()
-        {
-            if (playerTurn == 'r')
-            {
-                playerTurn = 'y';
-                TxtPlayerTurnInfo.ForeColor = Color.Yellow;
-                TxtPlayerTurnInfo.Text = "Yellow's Turn.";
-            }
-            else if (playerTurn == 'y')
-            {
-                playerTurn = 'r';
-                TxtPlayerTurnInfo.ForeColor = Color.Red;
-                TxtPlayerTurnInfo.Text = "Red's Turn.";
-            }
-        }
-
-        /// <summary>
-        /// Changing the colour of the top buttons on the mouse hover
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Connect4_MouseHover(object sender, EventArgs e, int i)
-        {
-
-            if (playerTurn == 'y')
-            {
-                lblTop[i].BackColor = Color.Yellow;
-            }
-            else if (playerTurn == 'r')
-            {
-                lblTop[i].BackColor = Color.Red;
-            }
-        }
-
-        private void Connect4_MouseLeave(object sender, EventArgs e, int i)
-        {
-            lblTop[i].BackColor = Color.RoyalBlue;
-        }
-
-
         private void connect4_Load(object sender, EventArgs e)
         {
 
@@ -551,42 +549,6 @@ namespace connect4Assignment
         private void TxtPlayerTurnInfo_TextChanged(object sender, EventArgs e)
         {
 
-        }
-
-        /// <summary>
-        /// Changes the colour of the tile depending on the players turn
-        /// </summary>
-        /// <param name="btn"></param>
-        /// <param name="e"></param>
-        private void BtnRow_MouseHover(Button btn, EventArgs e)
-        {
-            if (playerTurn == 'y')
-            {
-                btn.BackColor = Color.Yellow;
-            }
-            else if (playerTurn == 'r')
-            {
-                btn.BackColor = Color.Red;
-            }
-        }
-
-        /// <summary>
-        /// Clears the board of all tiles
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BtnReset_Click(object sender, EventArgs e)
-        {
-            for (int i = 0; i < 7; i++)
-            {
-                Btn[i].BackColor = Color.White;
-                for (int j = 0; j < 6; j++)
-                {
-                    lbl[i, j].BackColor = Color.White;
-                }
-            }
-
-            txtBoxWin.Text = "";
         }
 
         private void txtBoxWin_TextChanged(object sender, EventArgs e)
