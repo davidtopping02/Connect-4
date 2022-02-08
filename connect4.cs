@@ -137,9 +137,6 @@ namespace connect4Assignment
             // the label that is clicked
             Label labelClicked = (Label)sender;
 
-
-
-
             //changing the top label accordingly
             if (playerTurn == 'y')
             {
@@ -245,8 +242,7 @@ namespace connect4Assignment
         }
 
         private Boolean fourInRowChecker()
-        {
-
+        { 
             //vertical check
             for (int col = 0; col < 7; col++)
             {
@@ -303,7 +299,6 @@ namespace connect4Assignment
                     //difference for diagonal
                     for (int offset = 0; offset < 4; offset++)
                     {
-                        // i is col, j is row
                         if (lblGrid[col - offset, row + offset].BackColor == Color.FromName(getColor()))
                         {
                             counter++;
@@ -312,29 +307,24 @@ namespace connect4Assignment
                         {
                             counter = 0;
                         }
-                        // txtBoxWin.Text = Convert.ToString(inARow2);
                         if (counter >= 4)
                         {
-                            txtBoxWin.Text = "Winner";
                             return true;
-
                         }
                     }
                 }
             }
 
 
-            //descending diagonal
+            //ascending diagonal
             for (int col = 0; col < 4; col++)
             {
                 int counter = 0;
 
                 for (int row = 0; row < 3; row++)
                 {
-                    //difference for diagonal
                     for (int offset = 0; offset < 4; offset++)
                     {
-                        // i is col, j is row
                         if (lblGrid[col + offset, row + offset].BackColor == Color.FromName(getColor()))
                         {
                             counter++;
