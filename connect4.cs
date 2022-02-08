@@ -24,6 +24,7 @@ namespace connect4Assignment
         public connect4()
         {
             InitializeComponent();
+            //playMusic();
 
             //randomly selects a player to start
             selectRandomPlayer();
@@ -48,7 +49,7 @@ namespace connect4Assignment
 
                 for (int j = 0; j < 6; j++)
                 {
-                    initLabelPropery(i, j); 
+                    initLabelPropery(i, j);
                 }
 
             }
@@ -70,8 +71,8 @@ namespace connect4Assignment
 
             /*Event handlers*/
             //mouse overs
-            lblGrid[i,j].MouseHover += delegate (object sender, EventArgs e) { gridLabelMouseHover(sender, e, i); };
-            lblGrid[i,j].MouseLeave += delegate (object sender, EventArgs e) { gridLabelMouseLeave(sender, e, i); };
+            lblGrid[i, j].MouseHover += delegate (object sender, EventArgs e) { gridLabelMouseHover(sender, e, i); };
+            lblGrid[i, j].MouseLeave += delegate (object sender, EventArgs e) { gridLabelMouseLeave(sender, e, i); };
 
             //click
             lblGrid[i, j].Click += delegate (object sender, EventArgs e) { gridLabelClick(sender, e, i); };
@@ -128,7 +129,7 @@ namespace connect4Assignment
         private void gridLabelClick(object sender, EventArgs e, int col)
         {
             //when the top row is full
-            if (lblGrid[col,0].BackColor != Color.White)
+            if (lblGrid[col, 0].BackColor != Color.White)
             {
                 return;
             }
@@ -136,8 +137,8 @@ namespace connect4Assignment
             // the label that is clicked
             Label labelClicked = (Label)sender;
 
-           
-            
+
+
 
             //changing the top label accordingly
             if (playerTurn == 'y')
@@ -176,7 +177,7 @@ namespace connect4Assignment
                 if (playerTurn == 'y')
                 {
                     //dropping tile animation
-                    //dropAnimation(col, row);
+                    dropAnimation(col, row);
 
                     //changing colour
                     lblGrid[col, row].BackColor = Color.Yellow;
@@ -185,7 +186,7 @@ namespace connect4Assignment
                 }
                 else if (playerTurn == 'r')
                 {
-                    //dropAnimation(col, row);
+                    dropAnimation(col, row);
 
                     //changing colour
                     lblGrid[col, row].BackColor = Color.Red;
@@ -198,7 +199,7 @@ namespace connect4Assignment
             {
                 MessageBox.Show("winner");
             }
-            
+
             //change player
             changePlayer();
         }
@@ -253,7 +254,6 @@ namespace connect4Assignment
 
                 for (int row = 0; row < 6; row++)
                 {
-
                     if (lblGrid[col, row].BackColor == Color.FromName(getColor()))
                     {
                         counter++;
@@ -293,7 +293,6 @@ namespace connect4Assignment
                 }
             }
 
-
             //descending diagonal 
             for (int col = 6; col > 2; col--)
             {
@@ -322,7 +321,6 @@ namespace connect4Assignment
                         }
                     }
                 }
-
             }
 
 
@@ -333,11 +331,9 @@ namespace connect4Assignment
 
                 for (int row = 0; row < 3; row++)
                 {
-
                     //difference for diagonal
                     for (int offset = 0; offset < 4; offset++)
                     {
-
                         // i is col, j is row
                         if (lblGrid[col + offset, row + offset].BackColor == Color.FromName(getColor()))
                         {
@@ -353,30 +349,10 @@ namespace connect4Assignment
                         }
                     }
                 }
-
             }
 
             return false;
-        }
 
-
-        /// <summary>
-        /// Helper function to change the player's turn
-        /// </summary>
-        private void changePlayer()
-        {
-            if (playerTurn == 'r')
-            {
-                playerTurn = 'y';
-                TxtPlayerTurnInfo.ForeColor = Color.Yellow;
-                TxtPlayerTurnInfo.Text = "Yellow's Turn.";
-            }
-            else if (playerTurn == 'y')
-            {
-                playerTurn = 'r';
-                TxtPlayerTurnInfo.ForeColor = Color.Red;
-                TxtPlayerTurnInfo.Text = "Red's Turn.";
-            }
         }
 
         /// <summary>
@@ -401,7 +377,6 @@ namespace connect4Assignment
         {
             lblTop[i].BackColor = Color.RoyalBlue;
         }
-
 
         /// <summary>
         /// Clears the board of all tiles
@@ -443,6 +418,25 @@ namespace connect4Assignment
 
         }
 
+        /// <summary>
+        /// Helper function to change the player's turn
+        /// </summary>
+        private void changePlayer()
+        {
+            if (playerTurn == 'r')
+            {
+                playerTurn = 'y';
+                TxtPlayerTurnInfo.ForeColor = Color.Yellow;
+                TxtPlayerTurnInfo.Text = "Yellow's Turn.";
+            }
+            else if (playerTurn == 'y')
+            {
+                playerTurn = 'r';
+                TxtPlayerTurnInfo.ForeColor = Color.Red;
+                TxtPlayerTurnInfo.Text = "Red's Turn.";
+            }
+        }
+        
 
         private void computerTurn()
         {
@@ -524,5 +518,15 @@ namespace connect4Assignment
         {
 
         }
+
+/*        private void playMusic()
+        {
+            System.Media.SoundPlayer player =
+        new System.Media.SoundPlayer();
+            player.SoundLocation = @"connect4music.wav";
+            player.Load();
+            player.Play();
+        }*/
+
     }
 }
