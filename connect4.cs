@@ -24,6 +24,7 @@ namespace connect4Assignment
         public connect4()
         {
             InitializeComponent();
+            playMusic();
 
             //randomly selects a player to start
             selectRandomPlayer();
@@ -606,5 +607,15 @@ namespace connect4Assignment
         {
 
         }
+
+        private void playMusic()
+        {
+            System.Media.SoundPlayer player =
+        new System.Media.SoundPlayer();
+            player.SoundLocation = @"connect4music.wav";
+            player.Load();
+            player.Play();
+        }
+
     }
 }
