@@ -28,6 +28,8 @@ namespace connect4Assignment
 
             selectRandomPlayer();
 
+            computerTurn();
+
             //setting the player turn label
             if (playerTurn == 'y')
             {
@@ -199,18 +201,18 @@ namespace connect4Assignment
             if (playerTurn == 'y')
             {
                 //changing the top button
-                if (Btn[col].BackColor == Color.White)
+                if (lbl[col,0].BackColor == Color.White)
                 {
                     //changing top button to yellow
-                    Btn[col].BackColor = Color.Yellow;
-                    Btn[col].Refresh();
+                    lbl[col, 0].BackColor = Color.Yellow;
+                    lbl[col, 0].Refresh();
 
                     //wait
                     Thread.Sleep(110);
 
                     //back to white
-                    Btn[col].BackColor = Color.White;
-                    Btn[col].Refresh();
+                    lbl[col, 0].BackColor = Color.White;
+                    lbl[col, 0].Refresh();
                 }
 
                 //animation for peice dropping labels
@@ -234,18 +236,18 @@ namespace connect4Assignment
             if (playerTurn == 'r')
             {
                 //changing the top button
-                if (Btn[col].BackColor == Color.White)
+                if (lbl[col,0].BackColor == Color.White)
                 {
                     //changing top button to yellow
-                    Btn[col].BackColor = Color.Red;
-                    Btn[col].Refresh();
+                    lbl[col,0].BackColor = Color.Red;
+                    lbl[col,0].Refresh();
 
                     //wait
                     Thread.Sleep(110);
 
                     //back to white
-                    Btn[col].BackColor = Color.White;
-                    Btn[col].Refresh();
+                    lbl[col,0].BackColor = Color.White;
+                    lbl[col,0].Refresh();
                 }
 
                 //animation for peice dropping labels
@@ -523,6 +525,56 @@ namespace connect4Assignment
 
             }
             return false;
+        }
+
+        private void computerTurn()
+        {
+            Random rand = new Random();
+            int move = rand.Next(7);
+            int row = 0;
+
+            if (playerTurn == 'r') {
+
+                if (lbl[move, 0].BackColor == Color.White)
+                {
+                    while (lbl[move, row].BackColor == Color.White)
+                    {
+
+                        if (row == 5)
+                        {
+                            break;
+                        }
+                        else if (lbl[move, row + 1].BackColor != Color.White)
+                        {
+                            break;
+                        }
+
+                        //increment row if it doesn't meet other conditions
+                        row++;
+                    }
+
+                    //changing the colour of the tile
+                    if (playerTurn == 'y')
+                    {
+                        //dropping tile animation
+                        //dropAnimation(col, row);
+
+                        //changing colour
+                        lbl[move, row].BackColor = Color.Yellow;
+
+                        row = 0;
+                    }
+                    else if (playerTurn == 'r')
+                    {
+                        //dropAnimation(col, row);
+
+                        //changing colour
+                        lbl[move, row].BackColor = Color.Red;
+                        row = 0;
+                    }
+                }
+            }
+
         }
 
         private void connect4_Load(object sender, EventArgs e)
