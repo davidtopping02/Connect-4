@@ -15,8 +15,7 @@ namespace connect4Assignment
     {
         //init global variables/objects
         Label[] lblTop = new Label[7];
-        Label[,] lbl = new Label[7, 6];
-        Button[] Btn = new Button[7];
+        Label[,] lblGrid = new Label[7, 6];
         char playerTurn = 'r';
 
         /// <summary>
@@ -26,11 +25,10 @@ namespace connect4Assignment
         {
             InitializeComponent();
 
+            //randomly selects a player to start
             selectRandomPlayer();
 
-            computerTurn();
-
-            //setting the player turn label
+            //setting the player turn text
             if (playerTurn == 'y')
             {
                 TxtPlayerTurnInfo.ForeColor = Color.Yellow;
@@ -42,10 +40,10 @@ namespace connect4Assignment
                 TxtPlayerTurnInfo.Text = "Red's Turn.";
             }
 
-            //init each label and position
+            //init each  grid label and their propertiesn
             for (int i = 0; i < 7; i++)
             {
-                //initialise top labels for the mouse hovers
+                //initialise top labels (for the mouse hovers)
                 initialiseTopLabels(i);
 
                 for (int j = 0; j < 6; j++)
@@ -54,37 +52,39 @@ namespace connect4Assignment
                 }
 
             }
-
         }
 
         private void initLabelPropery(int i, int j)
         {
             //init each label
-            lbl[i, j] = new Label();
+            lblGrid[i, j] = new Label();
 
             //setting position and colour
-            lbl[i, j].SetBounds(100 + (75 * i), 170 + (75 * j), 60, 60);
-            lbl[i, j].BackColor = Color.White;
+            lblGrid[i, j].SetBounds(100 + (75 * i), 170 + (75 * j), 60, 60);
+            lblGrid[i, j].BackColor = Color.White;
 
             //making labels circular
             var path2 = new System.Drawing.Drawing2D.GraphicsPath();
-            path2.AddEllipse(0, 0, lbl[i, j].Width, lbl[i, j].Height);
-            this.lbl[i, j].Region = new Region(path2);
+            path2.AddEllipse(0, 0, lblGrid[i, j].Width, lblGrid[i, j].Height);
+            this.lblGrid[i, j].Region = new Region(path2);
 
-            //event handlers
-
+            /*Event handlers*/
             //mouse overs
-            lbl[i,j].MouseHover += delegate (object sender, EventArgs e) { Connect4_MouseHover(sender, e, i); };
-            lbl[i,j].MouseLeave += delegate (object sender, EventArgs e) { Connect4_MouseLeave(sender, e, i); };
+            lblGrid[i,j].MouseHover += delegate (object sender, EventArgs e) { gridLabelMouseHover(sender, e, i); };
+            lblGrid[i,j].MouseLeave += delegate (object sender, EventArgs e) { gridLabelMouseLeave(sender, e, i); };
 
             //click
-            lbl[i, j].Click += delegate (object sender, EventArgs e) { Connect4_LabelClick(sender, e, i); };
+            lblGrid[i, j].Click += delegate (object sender, EventArgs e) { gridLabelClick(sender, e, i); };
 
-            //adding to the controls
-            Controls.Add(lbl[i, j]);
+            //adding the objects to the form
+            Controls.Add(lblGrid[i, j]);
 
         }
 
+        /// <summary>
+        /// Top row of labels that appart on the mouse hover
+        /// </summary>
+        /// <param name="row"></param>
         private void initialiseTopLabels(int row)
         {
             //init each label
@@ -119,20 +119,25 @@ namespace connect4Assignment
             playerTurn = op;
         }
 
-        private void Connect4_LabelClick(object sender, EventArgs e, int col)
+        /// <summary>
+        /// Handles the event of the label clicks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <param name="col"></param>
+        private void gridLabelClick(object sender, EventArgs e, int col)
         {
-
-            //MAY NOT BE THE BEST WAY TO DO IT
-            if (lbl[col,0].BackColor != Color.White)
+            //when the top row is full
+            if (lblGrid[col,0].BackColor != Color.White)
             {
                 return;
             }
 
-            ////button clicked
+            // the label that is clicked
             Label labelClicked = (Label)sender;
 
-            //adding a tile to the row as long as there is an empty slot
-            int row = 0;
+           
+            
 
             //changing the top label accordingly
             if (playerTurn == 'y')
@@ -146,17 +151,19 @@ namespace connect4Assignment
                 lblTop[col].Refresh();
             }
 
-            //This is for the labels (NOT the top row butons)
-            if (lbl[col, 0].BackColor == Color.White)
+            //calculating where in the grid the new peice should fall to
+            if (lblGrid[col, 0].BackColor == Color.White)
             {
-                while (lbl[col, row].BackColor == Color.White)
+                int row = 0;
+
+                while (lblGrid[col, row].BackColor == Color.White)
                 {
 
                     if (row == 5)
                     {
                         break;
                     }
-                    else if (lbl[col, row + 1].BackColor != Color.White)
+                    else if (lblGrid[col, row + 1].BackColor != Color.White)
                     {
                         break;
                     }
@@ -165,14 +172,14 @@ namespace connect4Assignment
                     row++;
                 }
 
-                //changing the colour of the tile
+                //changing the colour of the tile once position calculated
                 if (playerTurn == 'y')
                 {
                     //dropping tile animation
                     //dropAnimation(col, row);
 
                     //changing colour
-                    lbl[col, row].BackColor = Color.Yellow;
+                    lblGrid[col, row].BackColor = Color.Yellow;
 
                     row = 0;
                 }
@@ -181,13 +188,18 @@ namespace connect4Assignment
                     //dropAnimation(col, row);
 
                     //changing colour
-                    lbl[col, row].BackColor = Color.Red;
+                    lblGrid[col, row].BackColor = Color.Red;
                     row = 0;
                 }
             }
 
             //check for 4 in a row
-            fourInRowChecker();
+            if (fourInRowChecker())
+            {
+                MessageBox.Show("winner");
+            }
+            
+            //change player
             changePlayer();
         }
 
@@ -198,108 +210,155 @@ namespace connect4Assignment
         /// <param name="row"></param>
         private void dropAnimation(int col, int row)
         {
-            if (playerTurn == 'y')
+            //changing the top label
+            if (lblGrid[col, 0].BackColor == Color.White)
             {
-                //changing the top button
-                if (lbl[col,0].BackColor == Color.White)
-                {
-                    //changing top button to yellow
-                    lbl[col, 0].BackColor = Color.Yellow;
-                    lbl[col, 0].Refresh();
+                //changing top label to colour
+                lblGrid[col, 0].BackColor = Color.FromName(getColor());
+                lblGrid[col, 0].Refresh();
 
-                    //wait
-                    Thread.Sleep(110);
+                //wait
+                Thread.Sleep(90);
 
-                    //back to white
-                    lbl[col, 0].BackColor = Color.White;
-                    lbl[col, 0].Refresh();
-                }
-
-                //animation for peice dropping labels
-                for (int i = 0; i < row; i++)
-                {
-
-                    //changing label yellow
-                    lbl[col, i].BackColor = Color.Yellow;
-                    lbl[col, i].Refresh();
-
-                    //wait
-                    Thread.Sleep(110);
-
-                    //back to white
-                    lbl[col, i].BackColor = Color.White;
-                    lbl[col, i].Refresh();
-
-                }
+                //back to white
+                lblGrid[col, 0].BackColor = Color.White;
+                lblGrid[col, 0].Refresh();
             }
 
-            if (playerTurn == 'r')
+            //animation for peice dropping labels
+            for (int i = 0; i < row; i++)
             {
-                //changing the top button
-                if (lbl[col,0].BackColor == Color.White)
-                {
-                    //changing top button to yellow
-                    lbl[col,0].BackColor = Color.Red;
-                    lbl[col,0].Refresh();
 
-                    //wait
-                    Thread.Sleep(110);
+                //changing label to colour
+                lblGrid[col, i].BackColor = Color.FromName(getColor());
+                lblGrid[col, i].Refresh();
 
-                    //back to white
-                    lbl[col,0].BackColor = Color.White;
-                    lbl[col,0].Refresh();
-                }
+                //wait
+                Thread.Sleep(90);
 
-                //animation for peice dropping labels
-                for (int i = 0; i < row; i++)
-                {
+                //back to white
+                lblGrid[col, i].BackColor = Color.White;
+                lblGrid[col, i].Refresh();
 
-                    //changing label yellow
-                    lbl[col, i].BackColor = Color.Red;
-                    lbl[col, i].Refresh();
-
-                    //wait
-                    Thread.Sleep(110);
-
-                    //back to white
-                    lbl[col, i].BackColor = Color.White;
-                    lbl[col, i].Refresh();
-
-                }
             }
         }
 
-        private void fourInRowChecker()
+        private Boolean fourInRowChecker()
         {
 
-            //this could be optimized so that if a win is optimized in vertical it doesnt check in horizontal... etc.
+            //vertical check
+            for (int col = 0; col < 7; col++)
+            {
+                int counter = 0;
 
-            checkVertical();
-            checkHorizontal();
-            checkDiagonal_downRight();
-            checkDiagonal_downLeft();
-            int open = 0;
-            if (checkVertical() == false && checkHorizontal() == false && checkDiagonal_downLeft() == false && checkDiagonal_downRight() == false){
-
-               for(int i =0 ; i < 7; i++)
+                for (int row = 0; row < 6; row++)
                 {
-                   if(lbl[i,0].BackColor == Color.White)
 
+                    if (lblGrid[col, row].BackColor == Color.FromName(getColor()))
                     {
-                        open++;
+                        counter++;
                     }
-                   
+                    else
+                    {
+                        counter = 0;
+                    }
                 }
 
-               if(open == 0)
+                if (counter >= 4)
                 {
-                    txtBoxWin.Text = "draw";
+                    return true;
+                }
+            }
+
+            //horizontal check
+            for (int row = 0; row < 6; row++)
+            {
+                int counter = 0;
+
+                for (int col = 0; col < 7; col++)
+                {
+                    if (lblGrid[col, row].BackColor == Color.FromName(getColor()))
+                    {
+                        counter++;
+                    }
+                    else
+                    {
+                        counter = 0;
+                    }
+
+                    if (counter >= 4)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+
+            //descending diagonal 
+            for (int col = 6; col > 2; col--)
+            {
+                int counter = 0;
+
+                for (int row = 0; row < 3; row++)
+                {
+                    //difference for diagonal
+                    for (int offset = 0; offset < 4; offset++)
+                    {
+                        // i is col, j is row
+                        if (lblGrid[col - offset, row + offset].BackColor == Color.FromName(getColor()))
+                        {
+                            counter++;
+                        }
+                        else
+                        {
+                            counter = 0;
+                        }
+                        // txtBoxWin.Text = Convert.ToString(inARow2);
+                        if (counter >= 4)
+                        {
+                            txtBoxWin.Text = "Winner";
+                            return true;
+
+                        }
+                    }
                 }
 
             }
 
 
+            //descending diagonal
+            for (int col = 0; col < 4; col++)
+            {
+                int counter = 0;
+
+                for (int row = 0; row < 3; row++)
+                {
+
+                    //difference for diagonal
+                    for (int offset = 0; offset < 4; offset++)
+                    {
+
+                        // i is col, j is row
+                        if (lblGrid[col + offset, row + offset].BackColor == Color.FromName(getColor()))
+                        {
+                            counter++;
+                        }
+                        else
+                        {
+                            counter = 0;
+                        }
+                        if (counter >= 4)
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+            }
+
+            return false;
         }
+
 
         /// <summary>
         /// Helper function to change the player's turn
@@ -325,7 +384,7 @@ namespace connect4Assignment
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Connect4_MouseHover(object sender, EventArgs e, int i)
+        private void gridLabelMouseHover(object sender, EventArgs e, int i)
         {
 
             if (playerTurn == 'y')
@@ -338,7 +397,7 @@ namespace connect4Assignment
             }
         }
 
-        private void Connect4_MouseLeave(object sender, EventArgs e, int i)
+        private void gridLabelMouseLeave(object sender, EventArgs e, int i)
         {
             lblTop[i].BackColor = Color.RoyalBlue;
         }
@@ -355,16 +414,19 @@ namespace connect4Assignment
             {
                 for (int j = 0; j < 6; j++)
                 {
-                    lbl[i, j].BackColor = Color.White;
+                    lblGrid[i, j].BackColor = Color.White;
                 }
             }
 
             txtBoxWin.Text = "";
         }
 
+        /// <summary>
+        /// Getter for the player turn field
+        /// </summary>
+        /// <returns ></returns>
         private string getColor()
         {
-
             string player = "";
 
             //determine which player to count for
@@ -381,151 +443,6 @@ namespace connect4Assignment
 
         }
 
-        private bool checkHorizontal()
-        {
-
-            int inARow = 0;
-           
-            //counting horizontal
-
-            for (int i = 0; i < 6; i++)
-            {
-                //inARow = 0;
-                for (int j = 0; j < 7; j++)
-                {
-                    // j is col, i is row
-                    if (lbl[j, i].BackColor == Color.FromName(getColor()))
-                    {
-                        inARow++;
-                    }
-                    else
-                    {
-                        inARow = 0;
-                    }
-                   // txtBoxWin.Text = Convert.ToString(inARow);
-                    if (inARow >= 4)
-                    {
-                        txtBoxWin.Text = "Winner";
-                        return true;
-                    }
-
-                }
-
-            }
-            return false;
-        }
-
-        private bool checkVertical()
-        {
-
-            int inARow = 0;
-           
-            for (int i = 0; i < 7; i++)
-            {
-
-
-                for (int j = 0; j < 6; j++)
-                {
-                    // i is col, j is row
-                    if (lbl[i, j].BackColor == Color.FromName(getColor()))
-                    {
-                        inARow++;
-                    }
-                    else
-                    {
-                        inARow = 0;
-                    }
-                   // txtBoxWin.Text = Convert.ToString(inARow2);
-                    if (inARow >= 4)
-                    {
-                        txtBoxWin.Text = "Winner";
-                        return true;
-                    }
-
-                }
-
-            }
-            return false;
-        }
-
-        private bool checkDiagonal_downRight()
-        {
-         
-
-            int inARow = 0;
-
-            for (int i = 0; i < 4; i++)
-            {
-
-            
-                for (int j = 0; j < 3; j++)
-                {
-
-                    //difference for diagonal
-                    for (int d = 0; d < 4; d++)
-                    {
-
-                        // i is col, j is row
-                        if (lbl[i+d, j+d].BackColor == Color.FromName(getColor()))
-                        {
-                            inARow++;
-                        }
-                        else
-                        {
-                            inARow = 0;
-                        }
-                        // txtBoxWin.Text = Convert.ToString(inARow2);
-                        if (inARow >= 4)
-                        {
-                            txtBoxWin.Text = "Winner";
-                            return true;
-                        }
-                    }
-                }
-
-            }
-            return false;
-        }
-
-        private bool checkDiagonal_downLeft()
-        {
-
-
-            int inARow = 0;
-
-            for (int i = 6; i > 4; i--)
-            {
-
-
-                for (int j = 0; j < 3 ; j++)
-                {
-
-                    //difference for diagonal
-                    for (int d = 0; d < 4; d++)
-                    {
-
-                        // i is col, j is row
-                        if (lbl[i - d, j + d].BackColor == Color.FromName(getColor()))
-                        {
-                            inARow++;
-                        }
-                        else
-                        {
-                            inARow = 0;
-                        }
-                        // txtBoxWin.Text = Convert.ToString(inARow2);
-                        if (inARow >= 4)
-                        {
-                            txtBoxWin.Text = "Winner";
-                            return true;
-                            
-                        }
-                    }
-                }
-
-            }
-            return false;
-        }
 
         private void computerTurn()
         {
@@ -535,16 +452,16 @@ namespace connect4Assignment
 
             if (playerTurn == 'r') {
 
-                if (lbl[move, 0].BackColor == Color.White)
+                if (lblGrid[move, 0].BackColor == Color.White)
                 {
-                    while (lbl[move, row].BackColor == Color.White)
+                    while (lblGrid[move, row].BackColor == Color.White)
                     {
 
                         if (row == 5)
                         {
                             break;
                         }
-                        else if (lbl[move, row + 1].BackColor != Color.White)
+                        else if (lblGrid[move, row + 1].BackColor != Color.White)
                         {
                             break;
                         }
@@ -560,7 +477,7 @@ namespace connect4Assignment
                         //dropAnimation(col, row);
 
                         //changing colour
-                        lbl[move, row].BackColor = Color.Yellow;
+                        lblGrid[move, row].BackColor = Color.Yellow;
 
                         row = 0;
                     }
@@ -569,7 +486,7 @@ namespace connect4Assignment
                         //dropAnimation(col, row);
 
                         //changing colour
-                        lbl[move, row].BackColor = Color.Red;
+                        lblGrid[move, row].BackColor = Color.Red;
                         row = 0;
                     }
                 }
