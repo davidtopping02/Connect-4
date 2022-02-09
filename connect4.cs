@@ -60,6 +60,8 @@ namespace connect4Assignment
             }
         }
 
+        
+
         private void initLabelPropery(int i, int j, bool isPvp)
         {
             //init each label
@@ -309,7 +311,11 @@ namespace connect4Assignment
 
                 for (int row = 0; row < 6; row++)
                 {
-                    if (lblGrid[col, row].BackColor == Color.FromName(getColor()))
+                    if (counter >= 4)
+                    {
+                      break;
+                    }
+                    else if (lblGrid[col, row].BackColor == Color.FromName(getColor()))
                     {
                         counter++;
                     }
@@ -321,6 +327,7 @@ namespace connect4Assignment
 
                 if (counter >= 4)
                 {
+                    DialogResult result = MessageBox.Show("Vertical win");
                     return true;
                 }
             }
@@ -343,12 +350,42 @@ namespace connect4Assignment
 
                     if (counter >= 4)
                     {
+                        DialogResult result = MessageBox.Show("Horizontal win");
                         return true;
                     }
                 }
             }
 
-            //descending diagonal 
+
+
+            //descending diagonal
+            for (int col = 0; col < 4; col++)
+            {
+                int counter = 0;
+
+                for (int row = 0; row < 3; row++)
+                {
+                    for (int offset = 0; offset < 4; offset++)
+                    {
+                        if (lblGrid[col + offset, row + offset].BackColor == Color.FromName(getColor()))
+                        {
+                            counter++;
+                        }
+                        else
+                        {
+                            counter = 0;
+                        }
+                        if (counter >= 4)
+                        {
+                            DialogResult result = MessageBox.Show("Descending diagonal win");
+                            return true;
+                        }
+                    }
+                }
+            }
+
+
+            //ascending diagonal 
             for (int col = 6; col > 2; col--)
             {
                 int counter = 0;
@@ -368,32 +405,7 @@ namespace connect4Assignment
                         }
                         if (counter >= 4)
                         {
-                            return true;
-                        }
-                    }
-                }
-            }
-
-
-            //ascending diagonal
-            for (int col = 0; col < 4; col++)
-            {
-                int counter = 0;
-
-                for (int row = 0; row < 3; row++)
-                {
-                    for (int offset = 0; offset < 4; offset++)
-                    {
-                        if (lblGrid[col + offset, row + offset].BackColor == Color.FromName(getColor()))
-                        {
-                            counter++;
-                        }
-                        else
-                        {
-                            counter = 0;
-                        }
-                        if (counter >= 4)
-                        {
+                            DialogResult result = MessageBox.Show("ascending Diagonal win");
                             return true;
                         }
                     }
