@@ -18,6 +18,9 @@ namespace connect4Assignment
         Label[,] lblGrid = new Label[7, 6];
         char playerTurn = 'r';
 
+        computer compPlayer = new computer('e');
+
+
         System.Media.SoundPlayer player =
        new System.Media.SoundPlayer();
         /// <summary>
@@ -430,55 +433,7 @@ namespace connect4Assignment
         }
         
       
-        private void computerTurn()
-        {
-            Random rand = new Random();
-            int move = rand.Next(7);
-            int row = 0;
-
-            if (playerTurn == 'r') {
-
-                if (lblGrid[move, 0].BackColor == Color.White)
-                {
-                    while (lblGrid[move, row].BackColor == Color.White)
-                    {
-
-                        if (row == 5)
-                        {
-                            break;
-                        }
-                        else if (lblGrid[move, row + 1].BackColor != Color.White)
-                        {
-                            break;
-                        }
-
-                        //increment row if it doesn't meet other conditions
-                        row++;
-                    }
-
-                    //changing the colour of the tile
-                    if (playerTurn == 'y')
-                    {
-                        //dropping tile animation
-                        //dropAnimation(col, row);
-
-                        //changing colour
-                        lblGrid[move, row].BackColor = Color.Yellow;
-
-                        row = 0;
-                    }
-                    else if (playerTurn == 'r')
-                    {
-                        //dropAnimation(col, row);
-
-                        //changing colour
-                        lblGrid[move, row].BackColor = Color.Red;
-                        row = 0;
-                    }
-                }
-            }
-
-        }
+      
 
         private void connect4_Load(object sender, EventArgs e)
         {
