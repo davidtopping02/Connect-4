@@ -20,9 +20,9 @@ namespace connect4Assignment
 
         computer compPlayer = new computer('e');
 
-
         System.Media.SoundPlayer player =
        new System.Media.SoundPlayer();
+
         /// <summary>
         /// default constructor
         /// </summary>
@@ -133,26 +133,47 @@ namespace connect4Assignment
         /// <param name="col"></param>
         private void gridLabelClick(object sender, EventArgs e, int col)
         {
-            //when the top row is full
-            if (lblGrid[col, 0].BackColor != Color.White)
+            if (!compPlayer.getTurn())
             {
-                return;
-            }
 
-            // the label that is clicked
-            Label labelClicked = (Label)sender;
+                //when the top row is full
+                if (lblGrid[col, 0].BackColor != Color.White)
+                {
+                    return;
+                }
 
-            //changing the top label accordingly
-            if (playerTurn == 'y')
-            {
-                lblTop[col].BackColor = Color.Red;
-                lblTop[col].Refresh();
+
+                //changing the top label accordingly
+                if (playerTurn == 'y')
+                {
+                    lblTop[col].BackColor = Color.Red;
+                    lblTop[col].Refresh();
+                }
+                else if (playerTurn == 'r')
+                {
+                    lblTop[col].BackColor = Color.Yellow;
+                    lblTop[col].Refresh();
+                }
+
+                //placing the tile
+                placeTile(col);
+
+                //check for 4 in a row
+                if (fourInRowChecker())
+                {
+                    MessageBox.Show("winner");
+                }
+
+                //change player
+                changePlayer();
+                //switch to computer turn
+                compPlayer.flipTurn();
+                computerTurn();
             }
-            else if (playerTurn == 'r')
-            {
-                lblTop[col].BackColor = Color.Yellow;
-                lblTop[col].Refresh();
-            }
+        }
+
+        private void placeTile(int col)
+        {
 
             //calculating where in the grid the new peice should fall to
             if (lblGrid[col, 0].BackColor == Color.White)
@@ -195,15 +216,26 @@ namespace connect4Assignment
                     row = 0;
                 }
             }
+        }
 
-            //check for 4 in a row
-            if (fourInRowChecker())
+        private void computerTurn()
+        {
+            if (compPlayer.getTurn() == true)
             {
-                MessageBox.Show("winner");
+                int move = compPlayer.computerMove();
+                placeTile(move);
+                if (fourInRowChecker())
+                {
+                    MessageBox.Show("winner");
+                }
+                compPlayer.flipTurn();
+                changePlayer();
+
+                
+               
             }
 
-            //change player
-            changePlayer();
+
         }
 
         /// <summary>

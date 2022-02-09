@@ -6,6 +6,7 @@ namespace connect4Assignment
 	{
 
 		char difficulty;
+		bool computerTurn = false;
 		
 		public computer()
 		{
@@ -16,7 +17,19 @@ namespace connect4Assignment
 			difficulty = d;
         }
 
-		private int computerMove()
+		
+		public bool getTurn()
+        {
+			return computerTurn;
+        }
+
+		public void flipTurn()
+        {
+			computerTurn = !computerTurn;
+        }
+
+
+		public int computerMove()
         {
 			switch (difficulty)
             {
@@ -50,6 +63,9 @@ namespace connect4Assignment
 			return 0;
 
             }
+
+
+
         }
 		
 
