@@ -144,12 +144,12 @@ namespace connect4Assignment
 
 
                 //changing the top label accordingly
-                if (playerTurn == 'y')
+                if (playerTurn == 'y' && isPvp == true)
                 {
                     lblTop[col].BackColor = Color.Red;
                     lblTop[col].Refresh();
                 }
-                else if (playerTurn == 'r')
+                else if (playerTurn == 'r' && isPvp == true)
                 {
                     lblTop[col].BackColor = Color.Yellow;
                     lblTop[col].Refresh();
@@ -161,7 +161,20 @@ namespace connect4Assignment
                 //check for 4 in a row
                 if (fourInRowChecker())
                 {
-                    MessageBox.Show("winner");
+                    DialogResult result = MessageBox.Show("\t     " + getColor() + " is the WINNER! \n\tWould you like to play again?", "WINNER!", MessageBoxButtons.YesNo);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        Menu men = new Menu();
+
+                        this.Hide();
+                        men.ShowDialog();
+                        this.Close();
+                    }
+                    else if (result == DialogResult.No)
+                    {
+                        Application.Exit();
+                    }
                 }
 
                 //change player
@@ -226,11 +239,28 @@ namespace connect4Assignment
         {
             if (compPlayer.getTurn() == true)
             {
+                TxtPlayerTurnInfo.Text = "Computer Playing...";
+                TxtPlayerTurnInfo.Refresh();    
+
                 int move = compPlayer.computerMove();
+
                 placeTile(move);
                 if (fourInRowChecker())
                 {
-                    MessageBox.Show("winner");
+                    DialogResult result = MessageBox.Show("\t     " + getColor() + " is the WINNER! \n\tWould you like to play again?", "WINNER!", MessageBoxButtons.YesNo);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        Menu men = new Menu();
+
+                        this.Hide();
+                        men.ShowDialog();
+                        this.Close();
+                    }
+                    else if (result == DialogResult.No)
+                    {
+                        Application.Exit();
+                    }
                 }
                 changePlayer();
                 compPlayer.flipTurn();
@@ -508,14 +538,25 @@ namespace connect4Assignment
 
         }
 
-/*        private void playMusic()
+        private void BtnMenu_Click(object sender, EventArgs e)
         {
-            System.Media.SoundPlayer player =
-        new System.Media.SoundPlayer();
-            player.SoundLocation = @"connect4music.wav";
-            player.Load();
-            player.Play();
-        }*/
+            {
+                Menu men = new Menu();
+
+                this.Hide();
+                men.ShowDialog();
+                this.Close();
+            }
+        }
+
+        /*        private void playMusic()
+                {
+                    System.Media.SoundPlayer player =
+                new System.Media.SoundPlayer();
+                    player.SoundLocation = @"connect4music.wav";
+                    player.Load();
+                    player.Play();
+                }*/
 
     }
 }

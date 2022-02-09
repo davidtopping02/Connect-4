@@ -32,6 +32,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.playerVsPlayer = new System.Windows.Forms.Button();
             this.playerVsComputer = new System.Windows.Forms.Button();
+            this.BtnExit = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -71,12 +72,26 @@
             this.playerVsComputer.UseVisualStyleBackColor = true;
             this.playerVsComputer.Click += new System.EventHandler(this.playerVsComputer_Click);
             // 
+            // BtnExit
+            // 
+            this.BtnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnExit.Font = new System.Drawing.Font("Impact", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnExit.ForeColor = System.Drawing.SystemColors.Control;
+            this.BtnExit.Location = new System.Drawing.Point(406, 683);
+            this.BtnExit.Name = "BtnExit";
+            this.BtnExit.Size = new System.Drawing.Size(179, 82);
+            this.BtnExit.TabIndex = 3;
+            this.BtnExit.Text = "Exit";
+            this.BtnExit.UseVisualStyleBackColor = true;
+            this.BtnExit.Click += new System.EventHandler(this.BtnExit_Click);
+            // 
             // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.RoyalBlue;
             this.ClientSize = new System.Drawing.Size(941, 823);
+            this.Controls.Add(this.BtnExit);
             this.Controls.Add(this.playerVsComputer);
             this.Controls.Add(this.playerVsPlayer);
             this.Controls.Add(this.pictureBox1);
@@ -85,6 +100,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.Name = "Menu";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Connect 4 (Menu)";
             this.Load += new System.EventHandler(this.Menu_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -97,6 +113,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button playerVsPlayer;
         private System.Windows.Forms.Button playerVsComputer;
+        private System.Windows.Forms.Button BtnExit;
     }
 
 }
