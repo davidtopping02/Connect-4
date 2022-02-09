@@ -18,13 +18,15 @@ namespace connect4Assignment
         Label[,] lblGrid = new Label[7, 6];
         char playerTurn = 'r';
 
+        System.Media.SoundPlayer player =
+       new System.Media.SoundPlayer();
         /// <summary>
         /// default constructor
         /// </summary>
         public connect4()
         {
             InitializeComponent();
-            playMusic();
+           // playMusic();
 
             //randomly selects a player to start
             selectRandomPlayer();
@@ -610,12 +612,20 @@ namespace connect4Assignment
 
         private void playMusic()
         {
-            System.Media.SoundPlayer player =
-        new System.Media.SoundPlayer();
+           
+
             player.SoundLocation = @"connect4music.wav";
             player.Load();
             player.Play();
+            
         }
 
+        private void btnSound_Click(object sender, EventArgs e)
+        {
+            
+            player.Stop();
+          
+
+        }
     }
 }
