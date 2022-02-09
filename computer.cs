@@ -44,10 +44,10 @@ namespace connect4Assignment
 				break;
 
             }
-				
-			
 
 
+
+			return 0;
 
             }
         }
@@ -56,6 +56,6 @@ namespace connect4Assignment
 	}
 
 
-}
+
 
 
