@@ -16,9 +16,9 @@ namespace connect4Assignment
 			difficulty = d;
         }
 
-		private int computerMove()
+		/*private int computerMove()
         {
-			swtich (difficulty) 
+			swtich(difficulty)
 
 			{
 
@@ -27,7 +27,7 @@ namespace connect4Assignment
 
 
             }
-        }
+        }*/
 		
 
 	}
