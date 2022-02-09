@@ -228,11 +228,11 @@ namespace connect4Assignment
                 {
                     MessageBox.Show("winner");
                 }
-                compPlayer.flipTurn();
                 changePlayer();
+                compPlayer.flipTurn();
 
-                
-               
+
+
             }
 
 
@@ -420,7 +420,7 @@ namespace connect4Assignment
                 }
             }
 
-            txtBoxWin.Text = "";
+          
         }
 
         /// <summary>

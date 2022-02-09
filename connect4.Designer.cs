@@ -35,7 +35,6 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnReset = new System.Windows.Forms.Button();
             this.TxtPlayerTurnInfo = new System.Windows.Forms.TextBox();
-            this.txtBoxWin = new System.Windows.Forms.TextBox();
             this.btnSound = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -79,7 +78,7 @@
             // 
             this.BtnReset.BackColor = System.Drawing.Color.AliceBlue;
             this.BtnReset.Location = new System.Drawing.Point(628, 569);
-            this.BtnReset.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BtnReset.Margin = new System.Windows.Forms.Padding(2);
             this.BtnReset.Name = "BtnReset";
             this.BtnReset.Size = new System.Drawing.Size(55, 37);
             this.BtnReset.TabIndex = 1;
@@ -94,19 +93,11 @@
             this.TxtPlayerTurnInfo.Font = new System.Drawing.Font("Tw Cen MT Condensed Extra Bold", 25.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtPlayerTurnInfo.ForeColor = System.Drawing.SystemColors.Window;
             this.TxtPlayerTurnInfo.Location = new System.Drawing.Point(104, 34);
-            this.TxtPlayerTurnInfo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TxtPlayerTurnInfo.Margin = new System.Windows.Forms.Padding(2);
             this.TxtPlayerTurnInfo.Name = "TxtPlayerTurnInfo";
             this.TxtPlayerTurnInfo.Size = new System.Drawing.Size(260, 38);
             this.TxtPlayerTurnInfo.TabIndex = 2;
             this.TxtPlayerTurnInfo.TextChanged += new System.EventHandler(this.TxtPlayerTurnInfo_TextChanged);
-            // 
-            // txtBoxWin
-            // 
-            this.txtBoxWin.Location = new System.Drawing.Point(334, 43);
-            this.txtBoxWin.Name = "txtBoxWin";
-            this.txtBoxWin.Size = new System.Drawing.Size(106, 20);
-            this.txtBoxWin.TabIndex = 3;
-            this.txtBoxWin.TextChanged += new System.EventHandler(this.txtBoxWin_TextChanged);
             // 
             // btnSound
             // 
@@ -126,14 +117,13 @@
             this.BackColor = System.Drawing.Color.RoyalBlue;
             this.ClientSize = new System.Drawing.Size(706, 669);
             this.Controls.Add(this.btnSound);
-            this.Controls.Add(this.txtBoxWin);
             this.Controls.Add(this.TxtPlayerTurnInfo);
             this.Controls.Add(this.BtnReset);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.Name = "connect4";
             this.Text = "Connect 4 (play)";
@@ -153,7 +143,6 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Button BtnReset;
         private System.Windows.Forms.TextBox TxtPlayerTurnInfo;
-        private System.Windows.Forms.TextBox txtBoxWin;
         private System.Windows.Forms.Button btnSound;
     }
 }
