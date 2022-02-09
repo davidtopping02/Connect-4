@@ -16,7 +16,6 @@ namespace connect4Assignment
         {
 			difficulty = d;
         }
-
 		
 		public bool getTurn()
         {
@@ -28,24 +27,18 @@ namespace connect4Assignment
 			computerTurn = !computerTurn;
         }
 
-
 		public int computerMove()
         {
 			switch (difficulty)
             {
 
-
 				//easy difficulty
 				case 'e':
-
 					Random rand = new Random();
-					
 					return(rand.Next(7));
-
-				
-
 				//medium difficulty
 				case 'm':
+
 
 
 				break;
@@ -58,16 +51,11 @@ namespace connect4Assignment
 
             }
 
-
-
 			return 0;
 
             }
 
-
-
         }
-		
 
 	}
 

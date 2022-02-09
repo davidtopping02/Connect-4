@@ -365,6 +365,8 @@ namespace connect4Assignment
 
                 for (int row = 0; row < 3; row++)
                 {
+                    counter = 0;
+
                     for (int offset = 0; offset < 4; offset++)
                     {
                         if (lblGrid[col + offset, row + offset].BackColor == Color.FromName(getColor()))
@@ -392,6 +394,7 @@ namespace connect4Assignment
 
                 for (int row = 0; row < 3; row++)
                 {
+                    counter = 0;
                     //difference for diagonal
                     for (int offset = 0; offset < 4; offset++)
                     {
