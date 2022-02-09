@@ -6,7 +6,7 @@ namespace connect4Assignment
 	{
 
 		char difficulty;
-
+		
 		public computer()
 		{
 		}
@@ -18,10 +18,33 @@ namespace connect4Assignment
 
 		private int computerMove()
         {
-			swtich (difficulty) 
+			switch (difficulty)
+            {
 
-			{
 
+				//easy difficulty
+				case 'e':
+
+					Random rand = new Random();
+					
+					return(rand.Next(7));
+
+				
+
+				//medium difficulty
+				case 'm':
+
+
+				break;
+
+				//hard difficulty
+				case 'h':
+
+
+				break;
+
+            }
+				
 			
 
 
