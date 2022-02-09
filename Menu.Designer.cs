@@ -69,6 +69,7 @@
             this.playerVsComputer.TabIndex = 2;
             this.playerVsComputer.Text = "Player Vs Computer";
             this.playerVsComputer.UseVisualStyleBackColor = true;
+            this.playerVsComputer.Click += new System.EventHandler(this.playerVsComputer_Click);
             // 
             // Menu
             // 

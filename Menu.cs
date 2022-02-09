@@ -34,7 +34,16 @@ namespace connect4Assignment
 
         private void playerVsPlayer_Click(object sender, EventArgs e)
         {
-            connect4 game = new connect4();
+            connect4 game = new connect4(true);
+
+            this.Hide();
+            game.ShowDialog();
+            this.Close();
+        }
+
+        private void playerVsComputer_Click(object sender, EventArgs e)
+        {
+            connect4 game = new connect4(false);
 
             this.Hide();
             game.ShowDialog();

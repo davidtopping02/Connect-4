@@ -26,7 +26,7 @@ namespace connect4Assignment
         /// <summary>
         /// default constructor
         /// </summary>
-        public connect4()
+        public connect4(Boolean isPvp)
         {
             InitializeComponent();
             //playMusic();
@@ -54,13 +54,13 @@ namespace connect4Assignment
 
                 for (int j = 0; j < 6; j++)
                 {
-                    initLabelPropery(i, j);
+                    initLabelPropery(i, j, isPvp);
                 }
 
             }
         }
 
-        private void initLabelPropery(int i, int j)
+        private void initLabelPropery(int i, int j, bool isPvp)
         {
             //init each label
             lblGrid[i, j] = new Label();
@@ -80,7 +80,7 @@ namespace connect4Assignment
             lblGrid[i, j].MouseLeave += delegate (object sender, EventArgs e) { gridLabelMouseLeave(sender, e, i); };
 
             //click
-            lblGrid[i, j].Click += delegate (object sender, EventArgs e) { gridLabelClick(sender, e, i); };
+            lblGrid[i, j].Click += delegate (object sender, EventArgs e) { gridLabelClick(sender, e, i, isPvp); };
 
             //adding the objects to the form
             Controls.Add(lblGrid[i, j]);
@@ -131,7 +131,7 @@ namespace connect4Assignment
         /// <param name="sender"></param>
         /// <param name="e"></param>
         /// <param name="col"></param>
-        private void gridLabelClick(object sender, EventArgs e, int col)
+        private void gridLabelClick(object sender, EventArgs e, int col, Boolean isPvp)
         {
             if (!compPlayer.getTurn())
             {
@@ -166,9 +166,13 @@ namespace connect4Assignment
 
                 //change player
                 changePlayer();
-                //switch to computer turn
-                compPlayer.flipTurn();
-                computerTurn();
+
+                //switch to computer turn if its pvc
+                if (isPvp == false)
+                {
+                    compPlayer.flipTurn();
+                    computerTurn();
+                }
             }
         }
 
