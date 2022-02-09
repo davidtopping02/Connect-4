@@ -16,7 +16,8 @@ namespace connect4Assignment
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new connect4());
+            //Application.Run(new connect4());
+            Application.Run(new Menu());
         }
     }
 }
