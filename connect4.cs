@@ -245,23 +245,8 @@ namespace connect4Assignment
         /// <param name="row"></param>
         private void dropAnimation(int col, int row)
         {
-            //changing the top label
-            if (lblGrid[col, 0].BackColor == Color.White)
-            {
-                //changing top label to colour
-                lblGrid[col, 0].BackColor = Color.FromName(getColor());
-                lblGrid[col, 0].Refresh();
-
-                //wait
-                Thread.Sleep(90);
-
-                //back to white
-                lblGrid[col, 0].BackColor = Color.White;
-                lblGrid[col, 0].Refresh();
-            }
-
             //animation for peice dropping labels
-            for (int i = 0; i < row; i++)
+            for (int i = 0; i < row+1; i++)
             {
 
                 //changing label to colour
@@ -272,8 +257,11 @@ namespace connect4Assignment
                 Thread.Sleep(90);
 
                 //back to white
-                lblGrid[col, i].BackColor = Color.White;
-                lblGrid[col, i].Refresh();
+                if (i != row)
+                {
+                    lblGrid[col, i].BackColor = Color.White;
+                    lblGrid[col, i].Refresh();
+                }
 
             }
         }
