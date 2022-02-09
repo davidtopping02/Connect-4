@@ -26,7 +26,7 @@ namespace connect4Assignment
         public connect4()
         {
             InitializeComponent();
-           // playMusic();
+            //playMusic();
 
             //randomly selects a player to start
             selectRandomPlayer();
@@ -51,11 +51,10 @@ namespace connect4Assignment
 
                 for (int j = 0; j < 6; j++)
                 {
-                    initLabelPropery(i, j); 
+                    initLabelPropery(i, j);
                 }
 
             }
-
         }
 
         private void initLabelPropery(int i, int j)
@@ -74,8 +73,8 @@ namespace connect4Assignment
 
             /*Event handlers*/
             //mouse overs
-            lblGrid[i,j].MouseHover += delegate (object sender, EventArgs e) { gridLabelMouseHover(sender, e, i); };
-            lblGrid[i,j].MouseLeave += delegate (object sender, EventArgs e) { gridLabelMouseLeave(sender, e, i); };
+            lblGrid[i, j].MouseHover += delegate (object sender, EventArgs e) { gridLabelMouseHover(sender, e, i); };
+            lblGrid[i, j].MouseLeave += delegate (object sender, EventArgs e) { gridLabelMouseLeave(sender, e, i); };
 
             //click
             lblGrid[i, j].Click += delegate (object sender, EventArgs e) { gridLabelClick(sender, e, i); };
@@ -132,16 +131,13 @@ namespace connect4Assignment
         private void gridLabelClick(object sender, EventArgs e, int col)
         {
             //when the top row is full
-            if (lblGrid[col,0].BackColor != Color.White)
+            if (lblGrid[col, 0].BackColor != Color.White)
             {
                 return;
             }
 
             // the label that is clicked
             Label labelClicked = (Label)sender;
-
-           
-            
 
             //changing the top label accordingly
             if (playerTurn == 'y')
@@ -198,8 +194,11 @@ namespace connect4Assignment
             }
 
             //check for 4 in a row
-            fourInRowChecker();
-            
+            if (fourInRowChecker())
+            {
+                MessageBox.Show("winner");
+            }
+
             //change player
             changePlayer();
         }
@@ -244,224 +243,108 @@ namespace connect4Assignment
             }
         }
 
-        private void fourInRowChecker()
-        {
-            Boolean valid = false;
+        private Boolean fourInRowChecker()
+        { 
+            //vertical check
+            for (int col = 0; col < 7; col++)
+            {
+                int counter = 0;
+
+                for (int row = 0; row < 6; row++)
+                {
+                    if (lblGrid[col, row].BackColor == Color.FromName(getColor()))
+                    {
+                        counter++;
+                    }
+                    else
+                    {
+                        counter = 0;
+                    }
+                }
+
+                if (counter >= 4)
+                {
+                    return true;
+                }
+            }
 
             //horizontal check
-
-            //vertical check
-
-            //ascending diagonal 
-
-            //descending diagonal
-
-
-
-            if (valid)
+            for (int row = 0; row < 6; row++)
             {
-                Console.WriteLine("WINNER");
-            }
-        }
+                int counter = 0;
 
-
-
-        /*private void fourInRowChecker()
-        {
-
-            //this could be optimized so that if a win is optimized in vertical it doesnt check in horizontal... etc.
-
-            checkVertical();
-            checkHorizontal();
-            checkDiagonal_downRight();
-            checkDiagonal_downLeft();
-            int open = 0;
-            if (checkVertical() == false && checkHorizontal() == false && checkDiagonal_downLeft() == false && checkDiagonal_downRight() == false){
-
-               for(int i =0 ; i < 7; i++)
+                for (int col = 0; col < 7; col++)
                 {
-                   if(lblGrid[i,0].BackColor == Color.White)
-
+                    if (lblGrid[col, row].BackColor == Color.FromName(getColor()))
                     {
-                        open++;
-                    }
-                   
-                }
-
-               if(open == 0)
-                {
-                    txtBoxWin.Text = "draw";
-                }
-
-            }
-
-
-        }*/
-
-
-        private bool checkHorizontal()
-        {
-
-            int inARow = 0;
-
-            //counting horizontal
-
-            for (int i = 0; i < 6; i++)
-            {
-                //inARow = 0;
-                for (int j = 0; j < 7; j++)
-                {
-                    // j is col, i is row
-                    if (lblGrid[j, i].BackColor == Color.FromName(getColor()))
-                    {
-                        inARow++;
+                        counter++;
                     }
                     else
                     {
-                        inARow = 0;
+                        counter = 0;
                     }
-                    // txtBoxWin.Text = Convert.ToString(inARow);
-                    if (inARow >= 4)
+
+                    if (counter >= 4)
                     {
-                        txtBoxWin.Text = "Winner";
                         return true;
                     }
-
                 }
-
             }
-            return false;
-        }
 
-        private bool checkVertical()
-        {
-
-            int inARow = 0;
-
-            for (int i = 0; i < 7; i++)
+            //descending diagonal 
+            for (int col = 6; col > 2; col--)
             {
+                int counter = 0;
 
-
-                for (int j = 0; j < 6; j++)
+                for (int row = 0; row < 3; row++)
                 {
-                    // i is col, j is row
-                    if (lblGrid[i, j].BackColor == Color.FromName(getColor()))
-                    {
-                        inARow++;
-                    }
-                    else
-                    {
-                        inARow = 0;
-                    }
-                    // txtBoxWin.Text = Convert.ToString(inARow2);
-                    if (inARow >= 4)
-                    {
-                        txtBoxWin.Text = "Winner";
-                        return true;
-                    }
-
-                }
-
-            }
-            return false;
-        }
-
-        private bool checkDiagonal_downRight()
-        {
-
-
-            int inARow = 0;
-
-            for (int i = 0; i < 4; i++)
-            {
-
-
-                for (int j = 0; j < 3; j++)
-                {
-
                     //difference for diagonal
-                    for (int d = 0; d < 4; d++)
+                    for (int offset = 0; offset < 4; offset++)
                     {
-
-                        // i is col, j is row
-                        if (lblGrid[i + d, j + d].BackColor == Color.FromName(getColor()))
+                        if (lblGrid[col - offset, row + offset].BackColor == Color.FromName(getColor()))
                         {
-                            inARow++;
+                            counter++;
                         }
                         else
                         {
-                            inARow = 0;
+                            counter = 0;
                         }
-                        // txtBoxWin.Text = Convert.ToString(inARow2);
-                        if (inARow >= 4)
+                        if (counter >= 4)
                         {
-                            txtBoxWin.Text = "Winner";
                             return true;
                         }
                     }
                 }
-
             }
-            return false;
-        }
-
-        private bool checkDiagonal_downLeft()
-        {
 
 
-            int inARow = 0;
-
-            for (int i = 6; i > 4; i--)
+            //ascending diagonal
+            for (int col = 0; col < 4; col++)
             {
+                int counter = 0;
 
-
-                for (int j = 0; j < 3; j++)
+                for (int row = 0; row < 3; row++)
                 {
-
-                    //difference for diagonal
-                    for (int d = 0; d < 4; d++)
+                    for (int offset = 0; offset < 4; offset++)
                     {
-
-                        // i is col, j is row
-                        if (lblGrid[i - d, j + d].BackColor == Color.FromName(getColor()))
+                        if (lblGrid[col + offset, row + offset].BackColor == Color.FromName(getColor()))
                         {
-                            inARow++;
+                            counter++;
                         }
                         else
                         {
-                            inARow = 0;
+                            counter = 0;
                         }
-                        // txtBoxWin.Text = Convert.ToString(inARow2);
-                        if (inARow >= 4)
+                        if (counter >= 4)
                         {
-                            txtBoxWin.Text = "Winner";
                             return true;
-
                         }
                     }
                 }
-
             }
+
             return false;
-        }
 
-        /// <summary>
-        /// Helper function to change the player's turn
-        /// </summary>
-        private void changePlayer()
-        {
-            if (playerTurn == 'r')
-            {
-                playerTurn = 'y';
-                TxtPlayerTurnInfo.ForeColor = Color.Yellow;
-                TxtPlayerTurnInfo.Text = "Yellow's Turn.";
-            }
-            else if (playerTurn == 'y')
-            {
-                playerTurn = 'r';
-                TxtPlayerTurnInfo.ForeColor = Color.Red;
-                TxtPlayerTurnInfo.Text = "Red's Turn.";
-            }
         }
 
         /// <summary>
@@ -486,7 +369,6 @@ namespace connect4Assignment
         {
             lblTop[i].BackColor = Color.RoyalBlue;
         }
-
 
         /// <summary>
         /// Clears the board of all tiles
@@ -528,7 +410,26 @@ namespace connect4Assignment
 
         }
 
-
+        /// <summary>
+        /// Helper function to change the player's turn
+        /// </summary>
+        private void changePlayer()
+        {
+            if (playerTurn == 'r')
+            {
+                playerTurn = 'y';
+                TxtPlayerTurnInfo.ForeColor = Color.Yellow;
+                TxtPlayerTurnInfo.Text = "Yellow's Turn.";
+            }
+            else if (playerTurn == 'y')
+            {
+                playerTurn = 'r';
+                TxtPlayerTurnInfo.ForeColor = Color.Red;
+                TxtPlayerTurnInfo.Text = "Red's Turn.";
+            }
+        }
+        
+      
         private void computerTurn()
         {
             Random rand = new Random();
@@ -627,5 +528,15 @@ namespace connect4Assignment
           
 
         }
+
+/*        private void playMusic()
+        {
+            System.Media.SoundPlayer player =
+        new System.Media.SoundPlayer();
+            player.SoundLocation = @"connect4music.wav";
+            player.Load();
+            player.Play();
+        }*/
+
     }
 }
