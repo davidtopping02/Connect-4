@@ -327,7 +327,6 @@ namespace connect4Assignment
 
                 if (counter >= 4)
                 {
-                    DialogResult result = MessageBox.Show("Vertical win");
                     return true;
                 }
             }
@@ -349,8 +348,7 @@ namespace connect4Assignment
                     }
 
                     if (counter >= 4)
-                    {
-                        DialogResult result = MessageBox.Show("Horizontal win");
+                    { 
                         return true;
                     }
                 }
@@ -379,7 +377,6 @@ namespace connect4Assignment
                         }
                         if (counter >= 4)
                         {
-                            DialogResult result = MessageBox.Show("Descending diagonal win");
                             return true;
                         }
                     }
@@ -408,7 +405,6 @@ namespace connect4Assignment
                         }
                         if (counter >= 4)
                         {
-                            DialogResult result = MessageBox.Show("ascending Diagonal win");
                             return true;
                         }
                     }
