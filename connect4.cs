@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using System.Media;
 
 namespace connect4Assignment
 {
@@ -19,10 +20,8 @@ namespace connect4Assignment
         char playerTurn = 'r';
 
         computer compPlayer = new computer('m');
-
-        System.Media.SoundPlayer player =
-       new System.Media.SoundPlayer();
-
+        SoundPlayer player = new SoundPlayer(connect4Assignment.Properties.Resources.connect4music);
+     
         /// <summary>
         /// default constructor
         /// </summary>
@@ -583,9 +582,8 @@ namespace connect4Assignment
 
         private void playMusic()
         {
-           
 
-            player.SoundLocation =  AppDomain.CurrentDomain.BaseDirectory + "\\connect4music.wav";
+   
             player.Load();
             player.Play();
             
