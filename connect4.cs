@@ -18,7 +18,7 @@ namespace connect4Assignment
         Label[,] lblGrid = new Label[7, 6];
         char playerTurn = 'r';
 
-        computer compPlayer = new computer('e');
+        computer compPlayer = new computer('m');
 
         System.Media.SoundPlayer player =
        new System.Media.SoundPlayer();
@@ -29,7 +29,7 @@ namespace connect4Assignment
         public connect4(Boolean isPvp)
         {
             InitializeComponent();
-            //playMusic();
+            playMusic();
 
             //randomly selects a player to start
             selectRandomPlayer();
@@ -179,6 +179,9 @@ namespace connect4Assignment
                     }
                 }
 
+                //check if the game is drawn
+                checkDraw();
+
                 //change player
                 changePlayer();
 
@@ -264,6 +267,8 @@ namespace connect4Assignment
                         Application.Exit();
                     }
                 }
+                //check if the game is a draw
+                checkDraw();
                 changePlayer();
                 compPlayer.flipTurn();
 
@@ -303,7 +308,9 @@ namespace connect4Assignment
         }
 
         private Boolean fourInRowChecker()
-        { 
+        {
+            int highest = 0;
+            int location = 0;
             //vertical check
             for (int col = 0; col < 7; col++)
             {
@@ -321,6 +328,10 @@ namespace connect4Assignment
                     }
                     else
                     {
+                        //setting highest to whatever the highest counter was
+                        if (counter > highest) highest = counter;
+                        //location of next best move
+                        location = col;
                         counter = 0;
                     }
                 }
@@ -344,6 +355,9 @@ namespace connect4Assignment
                     }
                     else
                     {
+                        if (counter > highest) highest = counter;
+                        //location of next best move
+                        location = col;
                         counter = 0;
                     }
 
@@ -373,6 +387,9 @@ namespace connect4Assignment
                         }
                         else
                         {
+                            if (counter > highest) highest = counter;
+                            //location of next best move
+                            location = col-1;
                             counter = 0;
                         }
                         if (counter >= 4)
@@ -401,6 +418,9 @@ namespace connect4Assignment
                         }
                         else
                         {
+                            if (counter > highest) highest = counter;
+                            //location of next best move
+                            location = col+1;
                             counter = 0;
                         }
                         if (counter >= 4)
@@ -411,10 +431,40 @@ namespace connect4Assignment
                 }
             }
 
+            //if the top row is not open, i.e if a column is full
+            if(lblGrid[location, 0].BackColor != Color.White){
+                location = location + 100;
+            }
+            compPlayer.setBestCoordinate(location, highest);
+
             return false;
 
         }
 
+        private void checkDraw()
+        {
+            int openCols = 0;
+            for (int i = 0; i < 7; i++)
+            {
+                if (lblGrid[i, 0].BackColor == Color.White)
+                {
+                    openCols++;
+                }
+            }
+            if (openCols == 0)
+            {
+                DialogResult result = MessageBox.Show("The game is a DRAW \n\tWould you like to play again?", "WINNER!", MessageBoxButtons.YesNo);
+
+                if (result == DialogResult.Yes)
+                {
+                    Menu men = new Menu();
+
+                    this.Hide();
+                    men.ShowDialog();
+                    this.Close();
+                }
+            }
+        }
         /// <summary>
         /// Changing the colour of the top buttons on the mouse hover
         /// </summary>
@@ -535,7 +585,7 @@ namespace connect4Assignment
         {
            
 
-            player.SoundLocation = @"connect4music.wav";
+            player.SoundLocation =  AppDomain.CurrentDomain.BaseDirectory + "\\connect4music.wav";
             player.Load();
             player.Play();
             
@@ -560,14 +610,6 @@ namespace connect4Assignment
             }
         }
 
-        /*        private void playMusic()
-                {
-                    System.Media.SoundPlayer player =
-                new System.Media.SoundPlayer();
-                    player.SoundLocation = @"connect4music.wav";
-                    player.Load();
-                    player.Play();
-                }*/
-
+      
     }
 }
