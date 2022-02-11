@@ -93,5 +93,8 @@
   <ItemGroup>
     <None Include="mainLogo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="connect4music.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
